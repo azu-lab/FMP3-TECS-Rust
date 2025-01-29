@@ -212,11 +212,11 @@ SYSSVC_DIRS := $(TECSGENDIR) $(SRCDIR)/tecs_kernel \
 				$(SYSSVC_DIRS) $(SRCDIR)/syssvc \
 				$(TECSDIR)/tecs $(TECSDIR)/tecs/rpc
 SYSSVC_ASMOBJS := $(SYSSVC_ASMOBJS)
-#SYSSVC_COBJS := $(SYSSVC_COBJS) tSysLog.o tSysLogAdapter.o tBannerMain.o tSerialPortMain.o tSerialAdapter.o tLogTaskMain.o tXUartPs.o $(TECS_KERNEL_COBJS) \
+# SYSSVC_COBJS := $(SYSSVC_COBJS) tSysLog.o tSysLogAdapter.o tBannerMain.o tSerialPortMain.o tSerialAdapter.o tLogTaskMain.o tXUartPs.o $(TECS_KERNEL_COBJS) \
 				$(INIT_TECS_COBJ) $(CXXRTS)
-#SYSSVC_COBJS := $(SYSSVC_COBJS) $(TECS_COBJS) $(TECS_KERNEL_COBJS) \
+SYSSVC_COBJS := $(SYSSVC_COBJS) $(TECS_COBJS) $(TECS_KERNEL_COBJS) \
 				$(INIT_TECS_COBJ) $(CXXRTS)
-SYSSVC_COBJS := $(SYSSVC_COBJS) $(CXXRTS)
+# SYSSVC_COBJS := $(SYSSVC_COBJS) $(CXXRTS)
 SYSSVC_CFLAGS := $(SYSSVC_CFLAGS)
 INCLUDES := $(INCLUDES) -I$(TECSGENDIR)  -I$(SRCDIR)/tecs_kernel \
 				-I$(TECSDIR)/tecs -I$(TECSDIR)/tecs/rpc
@@ -386,7 +386,7 @@ TECS_CPP = $(CC) $(CDEFS) $(INCLUDES) $(SYSSVC_CFLAGS) -D TECSGEN -E
 .PHONY: tecs
 tecs $(TECSGEN_SRCS) $(TECS_HEADERS): $(TECSGEN_TIMESTAMP) ;
 $(TECSGEN_TIMESTAMP): $(APPL_CDL) $(TECS_IMPORTS)
-#	$(TECSGEN) $< -R $(INCLUDES) --cpp "$(TECS_CPP)" -g $(TECSGENDIR)
+	$(TECSGEN) $< -R $(INCLUDES) --cpp "$(TECS_CPP)" -g $(TECSGENDIR)
 
 #
 #  カーネルのコンフィギュレーションファイルの生成
