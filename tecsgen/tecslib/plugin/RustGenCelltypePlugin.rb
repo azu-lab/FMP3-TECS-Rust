@@ -1395,8 +1395,8 @@ class RustGenCelltypePlugin < CelltypePlugin
 
         gen_file_path = "#{$gen}/#{file_name}"
 
-        # Cargo プロジェクトがあるかどうかを確認
-        return if Dir.exist?(@@cargo_path) == false
+        # Cargo プロジェクトがあるかどうかと、gen ディレクトリにコピー元のファイルがあるかどうかを確認
+        return if Dir.exist?(@@cargo_path) == false || File.exist?(gen_file_path) == false
 
         FileUtils.cp(gen_file_path, "#{@@cargo_path}/src")
 

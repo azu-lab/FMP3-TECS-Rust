@@ -69,7 +69,7 @@ celltype tTaskRs {
 	[inline] entry	siNotificationHandler	eiWakeUpNotificationHandler;
 
 	attr {
-		ID				id = C_EXP("TSKID_$id$");
+		[omit] ID				id = C_EXP("TSKID_$id$");
 		TaskRef			task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_$id$).unwrap())}");
 		[omit] ATR		attribute = C_EXP("TA_NULL");
 		[omit] PRI		priority;

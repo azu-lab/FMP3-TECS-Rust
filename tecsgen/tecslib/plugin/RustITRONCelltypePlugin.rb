@@ -928,15 +928,15 @@ CODE
 
     # Cargo.toml の設定を変更する
     def change_cargo_toml path
-        cargo_toml_path = "#{path}/Cargo.toml"
+        # cargo_toml_path = "#{path}/Cargo.toml"
 
-        # TODO: asp3 か fmp3 かは、何かしらで判断する必要がある
-        itron_rs_depenence = "itron = { version = \"= 0.1.9\", features = [\"asp3\", \"nightly\", \"unstable\"] }"
+        # # TODO: asp3 か fmp3 かは、何かしらで判断する必要がある
+        # itron_rs_depenence = "itron = { version = \"= 0.1.9\", features = [\"asp3\", \"nightly\", \"unstable\"] }"
 
-        File.open(cargo_toml_path, "a") do |file|
-            file.puts itron_rs_depenence
-            file.puts ""
-        end
+        # File.open(cargo_toml_path, "a") do |file|
+        #     file.puts itron_rs_depenence
+        #     file.puts ""
+        # end
 
         super(path)
     end

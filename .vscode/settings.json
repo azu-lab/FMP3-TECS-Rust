@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "serial.h": "c",
+        "target_syssvc.h": "c",
+        "zynq7000.h": "c",
+        "t_syslog.h": "c",
+        "target_serial.h": "c",
+        "chip_serial.h": "c",
+        "txuartps.h": "c"
+    }
+}
