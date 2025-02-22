@@ -56,8 +56,10 @@ typedef int_t ITRONResult__empty__ActivateError__;
 typedef int_t ITRONResult__empty__ActivateOnError__;
 typedef int_t ITRONResult__usize__CancelActivateAllError__;
 typedef int_t ITRONResult__empty__SetPriorityError__;
+typedef int_t Priority;
 typedef int_t ITRONResult__Priority__PriorityError__;
 typedef int_t ITRONResult__empty__MigrateError__;
+typedef int_t Processor;
 typedef int_t ITRONResult__State__StateError__;
 typedef int_t ITRONResult__Info__InfoError__;
 typedef int_t ITRONResult__empty__WakeError__;
@@ -72,13 +74,13 @@ typedef int_t ITRONResult__empty__TerminateError__;
 /*
  *  タスク操作のシグニチャ（タスクコンテキスト用）
  */
-signature sTaskRS {
+signature sTaskRs {
 	ITRONResult__empty__ActivateError__				activate(void);
-	ITRONResult__empty__ActivateOnError__			migrateAndActivate([in] ID prcid);           // FMP3
+	ITRONResult__empty__ActivateOnError__			migrateAndActivate([in] Processor prcid);           // FMP3
 	ITRONResult__usize__CancelActivateAllError__	cancelActivate(void);
-  	ITRONResult__empty__MigrateError__    			migrate([in] ID prcid);                      // FMP3
+  	ITRONResult__empty__MigrateError__    			migrate([in] Processor prcid);                      // FMP3
 	ITRONResult__State__StateError__				getTaskState(void);
-	ITRONResult__empty__SetPriorityError__			changePriority([in] PRI priority);
+	ITRONResult__empty__SetPriorityError__			changePriority([in] Priority priority);
 	ER												changeSubPriority([in] uint_t subPriority);  // FMP3
 	ITRONResult__Priority__PriorityError__			getPriority(void);
 	ITRONResult__Info__InfoError__					refer(void);
@@ -101,7 +103,7 @@ signature sTaskRS {
 //[active, generate(FMPObjectPlugin, "TASK"), idx_is_id]
 [active, generate(FMPObjectPlugin, "TASK")]
 celltype tTaskRs {
-	[inline] entry	sTaskRS	eTask;
+	[inline] entry	sTaskRs	eTask;
 	[inline] entry	siTask	eiTask;
 	call	sTaskBody	cTaskBody;
 
@@ -120,6 +122,49 @@ celltype tTaskRs {
 
 	FACTORY {
 		write("tecsgen.cfg", "#include \"$ct$_tecsgen.h\"");
+		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
+	};
+};
+
+typedef int_t SemaphoreRef;
+typedef int_t ITRONResult__empty__SignalError__;
+typedef int_t ITRONResult__empty__WaitError__;
+typedef int_t ITRONResult__empty__PollError__;
+typedef int_t ITRONResult__empty__WaitTimeoutError__;
+typedef int_t Timeout;
+typedef int_t ITRONResult__empty__InitializeError__;
+
+/*
+ *  セマフォ操作のシグニチャ（タスクコンテキスト用）
+ */
+signature sSemaphoreRs {
+	ITRONResult__empty__SignalError__			signal(void);
+	ITRONResult__empty__WaitError__				wait(void);
+	ITRONResult__empty__PollError__				waitPolling(void);
+	ITRONResult__empty__WaitTimeoutError__		waitTimeout([in] Timeout timeout);
+	ITRONResult__empty__InitializeError__		initialize(void);
+	ITRONResult__Info__InfoError__				refer(void);
+};
+
+/*
+ *  セマフォのセルタイプ
+ */
+[generate(FMPObjectPlugin, "SEMAPHORE")]
+celltype tSemaphoreRs {
+	[inline] entry	sSemaphoreRs	eSemaphore;
+	[inline] entry	siSemaphore	eiSemaphore;
+
+	[inline] entry	siNotificationHandler	eiNotificationHandler;
+
+	attr {
+		[omit]ID				id = C_EXP("SEMID_$id$");
+		SemaphoreRef	semaphore_ref = C_EXP("unsafe{SemaphoreRef::from_raw_nonnull(NonZeroI32::new(SEMID_$id$).unwrap())}");
+		[omit] ATR		attribute = C_EXP("TA_NULL");
+		[omit] uint_t	initialCount;
+		[omit] uint_t	maxCount = 1;
+	};
+
+	FACTORY {
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
 };
