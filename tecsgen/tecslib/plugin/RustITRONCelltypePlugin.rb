@@ -458,18 +458,20 @@ CODE
                 str = c_type_to_rust_type(attr.get_type)
                 # 属性や変数のフィールドに構造体がある場合は，ライフタイムを付与する必要がある
                 # itron-rsオブジェクトに対する，特別な生成
-                if str == "TaskRef" then
-                    # ライフタイムを付与
+                # ライフタイムを付与
+                case str
+                when "TaskRef"
                     str = "TaskRef<'a>"
-                    file.print "#{str},\n"
-                    # 書き込んでいるファイルを一度閉じる
-                    # file.close
-                    # creat_itron_rs_use cell
-                    # global_file_name = snake_case(cell.get_global_name.to_s)
-                    # file = CFile.open( "#{$gen}/#{global_file_name}.rs", "a" )
-                else
-                    file.print "#{str},\n"
+                when "SemaphoreRef"
+                    str = "SemaphoreRef<'a>"
+                when "EventflagRef"
+                    str = "EventflagRef<'a>"
+                when "DataqueueRef"
+                    str = "DataqueueRef<'a>"
+                when "MutexRef"
+                    str = "MutexRef<'a>"
                 end
+                file.print "#{str},\n"
             end
         }
     end
