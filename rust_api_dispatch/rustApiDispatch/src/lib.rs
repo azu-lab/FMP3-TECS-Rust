@@ -78,27 +78,32 @@ pub extern "C" fn tecs_rust_start_r_processor1_symmetric__task1_1(_: usize) {
 
 
     for i in 0..N{
-        let set_priority :Priority = 6;
+        let set_priority :Priority = 5;
         let default_priority :Priority = 10;
         let processor1 = Processor::from_raw_nonnull(NonZeroI32::new(1).unwrap());
         let processor2 = Processor::from_raw_nonnull(NonZeroI32::new(2).unwrap());
 
-        // c_task.act_tsk(); ↓
-        while c_task.info().unwrap().state() != Dormant {
-        	delay(duration!(ms: 5)).expect("delay failed");
-        }
-
-        // c_task.change_priority(&set_priority); ↓
-        // while c_task.get_priority().unwrap() != 10 {
+        /* c_task.act_tsk(); ↓ TASK2_2(attr: TA_NULL, pri: 5) */
+        // while c_task.info().unwrap().state() != Dormant {
         // 	delay(duration!(ms: 5)).expect("delay failed");
         // }
-        // c_task.activate();
 
-        // c_taskmig.migrate(&processor2); ↓
-        // while c_taskmig.info().unwrap().state() != Dormant {
-        //     delay(duration!(ms: 5)).expect("delay failed");
+        /* c_task.change_priority(&set_priority); ↓ TASK2_2(attr: TA_ACT, pri: 10) */
+        // {
+        //     while (c_task.info().unwrap().state() == Running || c_task.priority().unwrap() != default_priority){
+        //         delay(duration!(ms: 5)).expect("delay failed");
+        //     }
+        //     c_task.set_priority(default_priority);
+        //     c_task.activate();
         // }
-        // c_taskmig.activate();
+
+        /* c_taskmig.migrate(&processor2); ↓ TASK_MIG(attr: TA_NULL, pri: 6) */
+        {
+        	while c_taskmig.info().unwrap().state() != Dormant {
+        		delay(duration!(ms: 5)).expect("delay failed");
+        	}
+        	c_taskmig.activate();
+        }
 
         // wait_result = c_semaphore.wait();
         // print!("Processor1: act_tsk",);
@@ -137,13 +142,13 @@ pub extern "C" fn tecs_rust_start_r_processor1_symmetric__task1_1(_: usize) {
             START = fch_hrt();
         }
 
-        act_result = c_task.activate();
+        // act_result = c_task.activate();
         // acto_result = c_task.migrate_and_activate(processor2);
         // get_result = c_task.priority();
         // chg_result = c_task.set_priority(set_priority);
 
         // wait_result = c_semaphore.wait();
-        // mig_result = c_taskmig.migrate(processor2); // mig_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
+        mig_result = c_taskmig.migrate(processor2); // mig_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
         
         // unsafe{ ter_result = c_taskmig.terminate();} // ter_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
 
@@ -358,7 +363,7 @@ pub extern "C" fn tecs_rust_start_r_processor_all_mig__taskmig(_: usize) {
 
     let processor1 = Processor::from_raw_nonnull(NonZeroI32::new(1).unwrap());
 
-    c_task.migrate(processor1);
+    c_taskmig.migrate(processor1);
 }
 
 #[no_mangle]
@@ -377,6 +382,4 @@ pub extern "C" fn tecs_rust_start_r_processor2_symmetric__task2_2(_: usize) {
         let duration = END - START - OVERHEAD;
         print!("%tu,", duration);
     }
-
-    // c_task.set_priority(10);
 }
