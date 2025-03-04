@@ -32,7 +32,31 @@ impl STaskBody for ETaskbodyForTMeasure<'_>{
 		let (c_task, c_taskmig, c_semaphore) = self.cell.get_cell_ref();
 
 		print!("Processor1: TECS/Rust act_tsk dispatch", );
-		delay(duration!(ms: 1000)).expect("delay failed");
+		{
+			let dly_result = delay(duration!(ms: 1000));
+
+			// match dly_result {
+			// 	Ok(_) => {
+			// 		print!("delay success",);
+			// 	},
+			// 	Err(error) => {
+			// 		match error {
+			// 			BadContext => {
+			// 				print!("BadContext", );
+			// 			},
+			// 			NotSupported => {
+			// 				print!("BadId", );
+			// 			},
+			// 			Released => {
+			// 				print!("BadState", );
+			// 			},
+			// 			TerminateRequest => {
+			// 				print!("AccessDenied", );
+			// 			},
+			// 		}
+			// 	},
+			// }
+		}
 
 		let mut dispatch_time :HrtCnt = 0;
 		let mut dispatch_end :HrtCnt = 0;
@@ -63,7 +87,7 @@ impl STaskBody for ETaskbodyForTMeasure<'_>{
 		let mut sig_result :Result<(), Error<SignalError>> = Ok(());
 		let mut wait_result :Result<(), Error<WaitError>> = Ok(());
 
-		let set_priority :Priority = 6;
+		let set_priority :Priority = 5;
 		let default_priority :Priority = 10;
 
 		let processor1 = Processor::from_raw_nonnull(NonZeroI32::new(1).unwrap());
@@ -71,56 +95,72 @@ impl STaskBody for ETaskbodyForTMeasure<'_>{
 
 		let mut can_result :Result<usize, Error<CancelActivateAllError>> = Ok(0);
 
-		delay(duration!(ms: 1000)).expect("delay failed");
+		{
+			let dly_result = delay(duration!(ms: 1000));
+		}
 
 		for i in 0..N{
 
-        	// c_task.act_tsk(); ↓
-			// while c_task.refer().unwrap().state() != Dormant {
-			// 	delay(duration!(ms: 5)).expect("delay failed");
+        	/* c_task.act_tsk(); ↓ TASK2_2(attr: TA_NULL, pri: 5) */
+			// {
+			// 	while c_task.refer().unwrap().state() != Dormant {
+			// 		delay(duration!(ms: 5)).expect("delay failed");
+			// 	}
 			// }
 
-			// c_task.change_priority(&set_priority); ↓
-			while c_task.get_priority().unwrap() != 10 {
-				delay(duration!(ms: 5)).expect("delay failed");
+
+			/* c_task.change_priority(&set_priority); ↓ TASK2_2(attr: TA_ACT, pri: 10) */
+			{
+				while (c_task.refer().unwrap().state() == Running || c_task.get_priority().unwrap() != default_priority){
+					delay(duration!(ms: 5)).expect("delay failed");
+				}
+				c_task.change_priority(&default_priority);
+				c_task.activate();
 			}
-			// let temp = c_task.get_priority().unwrap();
-			// print!("c_task.get_priority(): %tu", temp);
-			c_task.activate();
 
-			// c_taskmig.migrate(&processor2); ↓
-			// while c_taskmig.refer().unwrap().state() != Dormant {
-			// 	delay(duration!(ms: 5)).expect("delay failed");
+
+			/* c_taskmig.migrate(&processor2); ↓ TASK_MIG(attr: TA_NULL, pri: 6) */
+			// {
+			// 	while c_taskmig.refer().unwrap().state() != Dormant {
+			// 		delay(duration!(ms: 5)).expect("delay failed");
+			// 	}
+			// 	c_taskmig.activate();
 			// }
-			// c_taskmig.activate();
 
-			// let refer = c_task.refer();
-			// match refer {
-			// 	Ok(info) => {
-			// 		match info.state() {
-			// 			Running => {
-			// 				print!("Running", );
-			// 			},
-			// 			Ready => {
-			// 				print!("Ready", );
-			// 			},
-			// 			Waiting => {
-			// 				print!("Waiting", );
-			// 			},
-			// 			Suspended => {
-			// 				print!("Suspended", );
-			// 			},
-			// 			WaitingSuspended => {
-			// 				print!("WaitingSuspended", );
-			// 			},
-			// 			Dormant => {
-			// 				print!("Dormant", );
-			// 			},
-			// 		}
-			// 	},
-			// 	Err(_) => {
-			// 		print!("info error", );
-			// 	},
+
+			// {
+			// 	let refer = c_task.refer();
+			// 	match refer {
+			// 		Ok(info) => {
+			// 			match info.state() {
+			// 				Running => {
+			// 					print!("Running", );
+			// 				},
+			// 				Ready => {
+			// 					print!("Ready", );
+			// 				},
+			// 				Waiting => {
+			// 					print!("Waiting", );
+			// 				},
+			// 				Suspended => {
+			// 					print!("Suspended", );
+			// 				},
+			// 				WaitingSuspended => {
+			// 					print!("WaitingSuspended", );
+			// 				},
+			// 				Dormant => {
+			// 					print!("Dormant", );
+			// 				},
+			// 			}
+			// 		},
+			// 		Err(_) => {
+			// 			print!("info error", );
+			// 		},
+			// 	}
+			// }
+
+			// {
+			// 	let dly_result = delay(duration!(ms: 20));
 			// }
 
 			unsafe{ 
@@ -129,22 +169,10 @@ impl STaskBody for ETaskbodyForTMeasure<'_>{
 			}
 
 			// act_result = c_task.activate();
-			// acto_result = c_task.migrate_and_activate(&processor2);
-			// get_result = c_task.get_priority();
 			chg_result = c_task.change_priority(&set_priority);
-
-			// wait_result = c_semaphore.wait();
 			// mig_result = c_taskmig.migrate(&processor2); // mig_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
 			
-			// ter_result = c_taskmig.terminate(); // ter_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
 
-			// unsafe{ 
-				// end = fch_hrt();
-				// _ = unl_cpu();
-			// }
-
-			// duration = end - start - overhead;
-			// print!("%tu,", duration );
 
 			// let refer = c_task.refer();
 			// match refer {

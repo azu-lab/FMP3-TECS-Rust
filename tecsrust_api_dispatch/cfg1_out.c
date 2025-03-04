@@ -1188,7 +1188,7 @@ const unsigned_t TOPPERS_cfg_static_api_65 = 65;
 #line 58 "./gen/tecsgen.cfg"
 const unsigned_t TOPPERS_cfg_valueof_tskatr_65 = (unsigned_t)(TA_ACT);
 #line 58 "./gen/tecsgen.cfg"
-const signed_t TOPPERS_cfg_valueof_itskpri_65 = (signed_t)(3);
+const signed_t TOPPERS_cfg_valueof_itskpri_65 = (signed_t)(4);
 #line 58 "./gen/tecsgen.cfg"
 const unsigned_t TOPPERS_cfg_valueof_stksz_65 = (unsigned_t)(2048);
 #line 56 "./gen/tecsgen.cfg"

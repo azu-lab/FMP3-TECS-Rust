@@ -21,6 +21,7 @@ extern "C" {
 	fn dis_dsp() -> ER;
 	fn ena_dsp() -> ER;
 }
+
 impl STaskBody for ETaskbodyForTStopTaskbody<'_>{
 
 	fn main(&'static self) {
@@ -35,11 +36,8 @@ impl STaskBody for ETaskbodyForTStopTaskbody<'_>{
 			print!("%tu,", duration);
 		}
 
-		let processor1 = Processor::from_raw_nonnull(NonZeroI32::new(1).unwrap());
-
-		if(*api == 1){
-			c_self_task.change_priority(&10);
-		}else if(*api == 2){
+		if(*api == 2){
+			let processor1 = Processor::from_raw_nonnull(NonZeroI32::new(1).unwrap());
 			c_self_task.migrate(&processor1);
 		}
 	}

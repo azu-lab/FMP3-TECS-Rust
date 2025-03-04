@@ -145,7 +145,7 @@ region rProcessor1Symmetric{
         /* 属性の設定 */
         id = C_EXP("TSKID_1_1");
         task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_1_1).unwrap())}");
-        priority = 3;
+        priority = 4;
         stackSize = 2048;
         attribute = C_EXP("TA_ACT");
     };
@@ -220,7 +220,6 @@ region rProcessor2Symmetric{
     [generate (RustFMP3Plugin, "lib")]
     cell tStopTaskbody StopTaskbody {
       cSelfTask = rProcessor2Symmetric::Task2_2.eTask;
-      //api = 0;
       api = 1;
     };
 };
