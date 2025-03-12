@@ -47,6 +47,7 @@ class RustITRONCelltypePlugin < RustGenCelltypePlugin
     @@arm_none_eabi_nm_gen = false
     @@kernel_cfg_rs_gen = false
     @@rust_task_func_list = []
+    @@rust_hadler_func_list = []
     @@rust_tecs_header_include = false
 
     #celltype::     Celltype        セルタイプ（インスタンス）
@@ -119,6 +120,18 @@ class RustITRONCelltypePlugin < RustGenCelltypePlugin
 
         if plugin_option.include?("TASK") then
             gen_task_func_definition file_name, celltype
+        elsif plugin_option.include?("INT_REQUEST") then
+            # TODO: CFG_INT (ASP3の場合はファクトリ生成かもしれない)
+        elsif plugin_option.include?("INT_SERVICE_ROUTINE") then
+            gen_isr_func_definition file_name, celltype
+        elsif plugin_option.include?("INT_HANDLER") then
+            # TODO: DEF_INH
+        elsif plugin_option.include?("CPU_EXCEPTION_HANDLER") then
+            # TODO: DEF_EXC
+        elsif plugin_option.include?("INIT_ROUTINE") then
+            # TODO: ATT_INI
+        elsif plugin_option.include?("TERM_ROUTINE") then
+            # TODO: ATT_TER
         end
 
         super(celltype)
@@ -153,6 +166,41 @@ class RustITRONCelltypePlugin < RustGenCelltypePlugin
                 file << "}\n"
 
                 gen_task_static_api_for_configuration cell
+            end
+        }
+
+        File.write("#{$gen}/#{file_option}.rs", file)
+    end
+
+    # lib.rs や main.rs に対して、extern関数を生成する
+    # TODO: リファクタリングの際に、タスクや他のハンドラの関数と一緒にしたい
+    def gen_isr_func_definition file_option, celltype
+        file = File.read("#{$gen}/#{file_option}.rs")
+
+        # 一番最初のタスク関数生成の時だけ、以下のパニックハンドラと、二つのuse文を追加する
+        gen_panic_handler_in_main_lib_rs file
+
+        if !file.include?("use crate::" + snake_case(celltype.get_global_name.to_s) + "::*;") then
+            file << "\nuse crate::" + snake_case(celltype.get_global_name.to_s) + "::*;\n"
+        end
+
+        if !file.include?("use si_handler_body::*;") then
+            file << "use si_handler_body::*;\n"
+        end
+        
+        celltype.get_cell_list.each{ |cell|
+            search_pattern = /
+                \#\[\s*no_mangle\s*\]\n
+                pub\s+extern\s*"C"\s+fn\s+tecs_rust_start_#{snake_case(cell.get_global_name.to_s)}\(\s*_\s*:\s*usize\s*\)\s*\{\n
+                \s*#{cell.get_global_name.to_s.upcase}\.c_task_body\.main\(\);\n
+            \}/x
+            if !file.match?(search_pattern) then
+                file << "\n#[no_mangle]\n"
+                file << "pub extern \"C\" fn tecs_rust_start_" + snake_case(cell.get_global_name.to_s) + "(_: usize) {\n"
+                file << "\t#{cell.get_global_name.to_s.upcase}.ci_handler_body.main();\n" # TODO: 呼び口である c_task_body が sTaskBody でつながっていることを前提としている
+                file << "}\n"
+
+                gen_isr_static_api_for_configuration cell
             end
         }
 
@@ -233,6 +281,11 @@ CODE
 
     # RustASP3CelltypePlugin や RustFMP3CelltypePlugin などで、それぞれのタスクの静的APIを生成する
     def gen_task_static_api_for_configuration cell
+
+    end
+
+    # RustASP3CelltypePlugin や RustFMP3CelltypePlugin などで、それぞれの CRE_ISR を生成する
+    def gen_isr_static_api_for_configuration cell
 
     end
 
