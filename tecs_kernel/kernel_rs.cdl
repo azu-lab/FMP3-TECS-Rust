@@ -168,3 +168,119 @@ celltype tSemaphoreRs {
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
 };
+
+typedef int_t DataqueueRef;
+typedef int_t ITRONResult__empty__SendError__;
+typedef uint_t DataElement;
+typedef int_t ITRONResult__empty__TrySendError__;
+typedef int_t ITRONResult__empty__SendTimeoutError__;
+typedef int_t ITRONResult__empty__SendForcedError__;
+typedef int_t ITRONResult__DataElement__RecvError__;
+typedef int_t ITRONResult__DataElement__TryRecvError__;
+typedef int_t ITRONResult__DataElement__RecvTimeoutError__;
+
+/*
+ *  データキュー操作のシグニチャ（タスクコンテキスト用）
+ */
+signature sDataqueueRs {
+	ITRONResult__empty__SendError__ 					send([in] DataElement data);
+	ITRONResult__empty__TrySendError__ 					sendPolling([in] DataElement data);
+	ITRONResult__empty__SendTimeoutError__ 				sendTimeout([in] DataElement data, [in] Timeout timeout);
+	ITRONResult__empty__SendForcedError__ 				sendForce([in] DataElement data);
+	ITRONResult__DataElement__RecvError__ 				receive(void);
+	ITRONResult__DataElement__TryRecvError__ 			receivePolling(void);
+	ITRONResult__DataElement__RecvTimeoutError__ 		receiveTimeout([in] Timeout timeout);
+	ITRONResult__empty__InitializeError__ 				initialize(void);
+	ITRONResult__Info__InfoError__						refer(void);
+};
+
+/*
+ *  データキュー操作のシグニチャ（非タスクコンテキスト用）
+ */
+[context("non-task")]
+signature siDataqueueRs {
+	ITRONResult__empty__TrySendError__ 			sendPolling([in] DataElement data);
+	ITRONResult__empty__SendForcedError__ 		sendForce([in] DataElement data);
+};
+
+/*
+ *  データキューのセルタイプ
+ */
+[generate(FMPObjectPlugin, "DATAQUEUE")]
+celltype tDataqueueRs {
+	[inline] entry	sDataqueueRs	eDataqueue;
+	[inline] entry	siDataqueueRs	eiDataqueue;
+
+	[inline] entry	siNotificationHandler	eiNotificationHandler;
+
+	attr {
+		[omit] ID				id = C_EXP("DTQID_$id$");
+		DataqueueRef	semaphore_ref = C_EXP("unsafe{DataqueueRef::from_raw_nonnull(NonZeroI32::new(SEMID_$id$).unwrap())}");
+		[omit] ATR		attribute = C_EXP("TA_NULL");
+		[omit] uint_t	dataCount = 1;
+		[omit] void		*dataqueueManagementBuffer = C_EXP("NULL");
+	};
+
+	FACTORY {
+		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
+	};
+};
+
+
+// TODO: 割込みは itron_rs で実装されていないため、暫定的な実装を行う
+
+typedef int_t ITRONResult__empty__ER__;
+typedef int_t ITRONResult__bool__ER__;
+
+/*
+ *  割込み要求ライン操作のシグニチャ（タスクコンテキスト用）
+ */
+signature sInterruptRequestRs {
+	ITRONResult__empty__ER__		disable(void);
+	ITRONResult__empty__ER__		enable(void);
+	ITRONResult__empty__ER__		clear(void);
+	ITRONResult__empty__ER__		raise(void);
+	ITRONResult__bool__ER__			probe(void);
+};
+
+/*
+ *  割込み要求ラインのセルタイプ
+ *
+ *  割込み要求ラインはカーネルドメインに所属させなければならない．
+ */
+[active, generate(FMPHandlerPlugin, "INT_REQUEST")]
+celltype tInterruptRequestRs {
+	[inline] entry	sInterruptRequestRs	eInterruptRequest;
+
+	attr {
+		INTNO			interruptNumber;
+		[omit] ATR		attribute = C_EXP("TA_NULL");
+		[omit] PRI		interruptPriority;
+	};
+
+	/* 警告メッセージを抑止するための記述 */
+	factory {
+		write("tecsgen.cfg", "");
+	};
+};
+
+/*
+ *  割込みサービスルーチンのセルタイプ
+ *
+ */
+[active, generate(FMPHandlerPlugin, "INT_SERVICE_ROUTINE")]
+celltype tIsrRs {
+	call	siHandlerBody	ciISRBody;
+
+	attr {
+		ID				id = C_EXP("ISRID_$id$");
+		[omit] ATR		attribute = C_EXP("TA_NULL");
+		[omit] INTNO	interruptNumber;
+		[omit] PRI		isrPriority = 1;
+	};
+
+	FACTORY {
+		write("tecsgen.cfg", "#include \"$ct$_tecsgen.h\"");
+		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
+	};
+};
