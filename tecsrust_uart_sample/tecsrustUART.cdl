@@ -133,6 +133,7 @@ signature siSioCbr {
 
 celltype tXUartTaskbody {
   call sXUartMeasure cXUart;
+  call siDataqueueRs cDataqueue;
   entry sTaskBody eTaskbody;
   entry siSioCbr eXUartMain;
 };
@@ -175,6 +176,7 @@ region rProcessor1Symmetric{
     [generate(RustFMP3Plugin, "lib")]
     cell tXUartTaskbody UartTaskbody {
       cXUart = Uart.eXUart;
+      cDataqueue = Dataqueue.eiDataqueue;
     };
 
     [generate(RustFMP3Plugin, "lib")]
@@ -210,6 +212,20 @@ region rProcessor1Symmetric{
     cell tXUartInterruptInitializeBody UartIniBody {
 
     };
+
+    [generate(RustFMP3Plugin, "lib, DATAQUEUE")]
+    cell tDataqueueRs Dataqueue {
+      id = C_EXP("DTQID_UART");
+      dataqueue_ref = C_EXP("unsafe{DataqueueRef::from_raw_nonnull(NonZeroI32::new(DTQID_UART).unwrap())}");
+      attribute = C_EXP("TA_NULL");
+      dataCount = 1;
+    };
+};
+
+celltype tTaskbody {
+  entry sTaskBody eTaskbody;
+  call sXUartMeasure cXUart;
+  call sDataqueueRs cDataqueue;
 };
 
 [class(FMP,"CLS_PRC2")]
@@ -218,7 +234,7 @@ region rProcessor2Symmetric{
     [generate(RustFMP3Plugin, "TASK, lib")]
     cell tTaskRs ButtonTask {
       /* 呼び口の結合 */
-      cTaskBody = rProcessor2Symmetric::LoopTaskbody.eTaskbody;
+      cTaskBody = rProcessor2Symmetric::TaskBody.eTaskbody;
       /* 属性の設定 */
       id = C_EXP("TSKID_LOOP");
       task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_LOOP).unwrap())}");
@@ -227,8 +243,14 @@ region rProcessor2Symmetric{
       attribute = C_EXP("TA_ACT");
     };
 
+    //[generate(RustFMP3Plugin, "lib")]
+    //cell tLoopTaskbody LoopTaskbody {
+    //};
+
     [generate(RustFMP3Plugin, "lib")]
-    cell tLoopTaskbody LoopTaskbody {
+    cell tTaskbody TaskBody {
+      cXUart = rProcessor1Symmetric::Uart.eXUart;
+      cDataqueue = rProcessor1Symmetric::Dataqueue.eDataqueue;
     };
 };
 

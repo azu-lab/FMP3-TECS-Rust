@@ -1,7 +1,7 @@
 use itron::task::TaskRef;
 use core::num::NonZeroI32;
 use crate::kernel_cfg::*;
-use crate::{s_task_body::*, t_xuart_taskbody::*, t_loop_taskbody::*};
+use crate::{s_task_body::*, t_xuart_taskbody::*, t_taskbody::*};
 
 pub struct TTaskRs<'a>{
 	pub c_task_body: &'a (dyn STaskBody + Sync + Send),
@@ -52,7 +52,7 @@ pub static EIWAKEUPNOTIFICATIONHANDLERFORRPROCESSOR1SYMMETRIC_UARTTASK: EiWakeUp
 
 #[link_section = ".rodata"]
 pub static RPROCESSOR2SYMMETRIC_BUTTONTASK: TTaskRs = TTaskRs {
-	c_task_body: &ETASKBODYFORRPROCESSOR2SYMMETRIC_LOOPTASKBODY,
+	c_task_body: &ETASKBODYFORRPROCESSOR2SYMMETRIC_TASKBODY,
 	task_ref: unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_LOOP).unwrap())},
 };
 

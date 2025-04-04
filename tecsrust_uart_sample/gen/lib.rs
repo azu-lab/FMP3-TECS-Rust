@@ -9,6 +9,10 @@ mod s_task_rs;
 mod si_task;
 mod s_task_body;
 mod si_notification_handler;
+mod t_dataqueue_rs;
+mod t_dataqueue_rs_impl;
+mod s_dataqueue_rs;
+mod si_dataqueue_rs;
 mod t_isr_rs;
 mod si_handler_body;
 mod t_initialize_routine_rs;
@@ -19,10 +23,10 @@ mod s_xuart_measure;
 mod si_sio_cbr;
 mod t_xuart;
 mod t_xuart_impl;
-mod t_loop_taskbody;
-mod t_loop_taskbody_impl;
 mod t_xuart_interrupt_initialize_body;
 mod t_xuart_interrupt_initialize_body_impl;
+mod t_taskbody;
+mod t_taskbody_impl;
 
 #[panic_handler]
 fn panic(_panic: &core::panic::PanicInfo<'_>) -> ! {

@@ -1199,20 +1199,30 @@ const signed_t TOPPERS_cfg_valueof_CLASS_65 = (signed_t)(CLS_PRC2);
 
 #line 59 "./gen/tecsgen.cfg"
 const unsigned_t TOPPERS_cfg_static_api_66 = 66;
-#define ISRID_PRC2	(<>)
+#define DTQID_UART	(<>)
 #line 59 "./gen/tecsgen.cfg"
-const unsigned_t TOPPERS_cfg_valueof_isratr_66 = (unsigned_t)(TA_NULL);
+const unsigned_t TOPPERS_cfg_valueof_dtqatr_66 = (unsigned_t)(TA_NULL);
 #line 59 "./gen/tecsgen.cfg"
-const unsigned_t TOPPERS_cfg_valueof_intno_66 = (unsigned_t)(82);
-#line 59 "./gen/tecsgen.cfg"
-const signed_t TOPPERS_cfg_valueof_isrpri_66 = (signed_t)(1);
+const unsigned_t TOPPERS_cfg_valueof_dtqcnt_66 = (unsigned_t)(1);
 #line 57 "./gen/tecsgen.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_66 = (signed_t)(CLS_PRC1);
 
 #line 64 "./gen/tecsgen.cfg"
 const unsigned_t TOPPERS_cfg_static_api_67 = 67;
+#define ISRID_PRC2	(<>)
 #line 64 "./gen/tecsgen.cfg"
-const unsigned_t TOPPERS_cfg_valueof_iniatr_67 = (unsigned_t)(TA_NULL);
+const unsigned_t TOPPERS_cfg_valueof_isratr_67 = (unsigned_t)(TA_NULL);
+#line 64 "./gen/tecsgen.cfg"
+const unsigned_t TOPPERS_cfg_valueof_intno_67 = (unsigned_t)(82);
+#line 64 "./gen/tecsgen.cfg"
+const signed_t TOPPERS_cfg_valueof_isrpri_67 = (signed_t)(1);
 #line 62 "./gen/tecsgen.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_67 = (signed_t)(CLS_PRC1);
+
+#line 69 "./gen/tecsgen.cfg"
+const unsigned_t TOPPERS_cfg_static_api_68 = 68;
+#line 69 "./gen/tecsgen.cfg"
+const unsigned_t TOPPERS_cfg_valueof_iniatr_68 = (unsigned_t)(TA_NULL);
+#line 67 "./gen/tecsgen.cfg"
+const signed_t TOPPERS_cfg_valueof_CLASS_68 = (signed_t)(CLS_PRC1);
 

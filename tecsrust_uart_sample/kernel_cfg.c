@@ -138,8 +138,17 @@ TOPPERS_EMPTY_LABEL(FLGCB *const, _kernel_p_flgcb_table);
 
 const ID _kernel_tmax_dtqid = (TMIN_DTQID + TNUM_DTQID - 1);
 
-TOPPERS_EMPTY_LABEL(const DTQINIB, _kernel_dtqinib_table);
-TOPPERS_EMPTY_LABEL(DTQCB *const, _kernel_p_dtqcb_table);
+static DTQMB _kernel_dtqmb_DTQID_UART[1] __attribute__((section(".kernel_data_CLS_PRC1"),nocommon));
+
+const DTQINIB _kernel_dtqinib_table[TNUM_DTQID] = {
+	{ (TA_NULL), (1), _kernel_dtqmb_DTQID_UART }
+};
+
+static DTQCB _kernel_dtqcb_DTQID_UART __attribute__((section(".kernel_data_CLS_PRC1"),nocommon));
+
+DTQCB	*const _kernel_p_dtqcb_table[TNUM_DTQID] = {
+	&_kernel_dtqcb_DTQID_UART
+};
 
 /*
  *  Priority Dataqueue Functions
@@ -317,6 +326,7 @@ _kernel_initialize_object(PCB *p_my_pcb)
 {
 	_kernel_initialize_task(p_my_pcb);
 	_kernel_initialize_semaphore(p_my_pcb);
+	_kernel_initialize_dataqueue(p_my_pcb);
 	_kernel_initialize_interrupt(p_my_pcb);
 	_kernel_initialize_exception(p_my_pcb);
 }

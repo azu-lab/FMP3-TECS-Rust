@@ -13,7 +13,8 @@
 
 #define TNUM_FLGID	0
 
-#define TNUM_DTQID	0
+#define TNUM_DTQID	1
+#define DTQID_UART	1
 
 #define TNUM_PDQID	0
 
