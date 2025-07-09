@@ -54,11 +54,7 @@
 #endif
 #if TNUM_PRCID >= 4
 #endif
-#include "tTask_tecsgen.h"
 #include "rustUART.h"
-#include "tISR_tecsgen.h"
-#include "tInitializeRoutine_tecsgen.h"
-#include "tTerminateRoutine_tecsgen.h"
 #include "tTask_tecsgen.h"
 #include "tISR_tecsgen.h"
 #include "tInitializeRoutine_tecsgen.h"

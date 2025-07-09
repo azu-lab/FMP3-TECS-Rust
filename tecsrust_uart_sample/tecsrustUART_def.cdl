@@ -1,0 +1,31 @@
+import("syssvc/tSerialPort.cdl");
+import("syssvc/tSerialAdapter.cdl");
+import("syssvc/tSysLog.cdl");
+import("syssvc/tSysLogAdapter.cdl");
+
+/*
+ *  ターゲット依存部からのコールバック
+ */
+[callback]
+signature siSioCbr {
+	void	readySend(void);
+	void	readyReceive(void);
+};
+
+signature sXUartMeasure {
+  void open(void);
+  bool_t putChar([in] uint8_t c);
+  bool_t getChar([out] uint8_t *c);
+};
+
+celltype tXUart {
+  call siSioCbr cXUartMain;
+  entry sXUartMeasure eXUart;
+  entry siHandlerBody eiHandlerBody;
+  attr {
+    uint32_t base_address;
+    uint32_t mode;
+    uint32_t baudgen;
+    uint32_t bauddiv;
+  };
+};

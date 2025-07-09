@@ -55,7 +55,7 @@ const XUART_BAUDDIV_115K: u32 = 0x06;
 impl STaskBody for ETaskbodyForTButtonTaskbody<'_>{
 
 	fn main(&'static self) {
-		let (c_button1, c_button2) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 		print!("\t\t\tProcessor2: Button task start", );
 

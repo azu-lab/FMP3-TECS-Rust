@@ -20,14 +20,14 @@ mod s_routine_body;
 mod t_mio_led;
 mod t_mio_led_impl;
 mod s_led;
-mod t_xuart;
-mod t_xuart_impl;
+mod t_x_uart;
+mod t_x_uart_impl;
 mod si_sio_cbr;
-mod s_xuart_measure;
-mod t_xuart_taskbody;
-mod t_xuart_taskbody_impl;
-mod t_xuart_interrupt_initialize_body;
-mod t_xuart_interrupt_initialize_body_impl;
+mod s_x_uart_measure;
+mod t_x_uart_taskbody;
+mod t_x_uart_taskbody_impl;
+mod t_x_uart_interrupt_initialize_body;
+mod t_x_uart_interrupt_initialize_body_impl;
 mod t_taskbody;
 mod t_taskbody_impl;
 
@@ -40,12 +40,12 @@ use crate::t_task_rs::*;
 use s_task_body::*;
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor1_symmetric__uart_task(_: usize) {
+pub extern "C" fn tecs_rust_start_r_processor1_symmetric_uart_task(_: usize) {
 	RPROCESSOR1SYMMETRIC_UARTTASK.c_task_body.main();
 }
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor2_symmetric__button_task(_: usize) {
+pub extern "C" fn tecs_rust_start_r_processor2_symmetric_button_task(_: usize) {
 	RPROCESSOR2SYMMETRIC_BUTTONTASK.c_task_body.main();
 }
 
@@ -53,7 +53,7 @@ use crate::t_isr_rs::*;
 use si_handler_body::*;
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor1_symmetric__uart_isr(_: usize) {
+pub extern "C" fn tecs_rust_start_r_processor1_symmetric_uart_isr(_: usize) {
 	RPROCESSOR1SYMMETRIC_UARTISR.ci_isr_body.main();
 }
 
@@ -61,6 +61,6 @@ use crate::t_initialize_routine_rs::*;
 use s_routine_body::*;
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor1_symmetric__uart_ini(_: usize) {
+pub extern "C" fn tecs_rust_start_r_processor1_symmetric_uart_ini(_: usize) {
 	RPROCESSOR1SYMMETRIC_UARTINI.c_initialize_routine_body.main();
 }

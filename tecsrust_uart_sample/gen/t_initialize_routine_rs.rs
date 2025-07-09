@@ -1,6 +1,14 @@
 use crate::{s_routine_body::*, t_xuart_interrupt_initialize_body::*};
 
-pub struct TInitializeRoutineRs<'a, T>where
+pub struct TInitializeRoutineRs<'a, T>
+where
+	T: SRoutineBody,
+{
+	pub c_initialize_routine_body: &'a T,
+}
+
+pub struct LockGuardForTInitializeRoutineRs<'a, T>
+where
 	T: SRoutineBody,
 {
 	pub c_initialize_routine_body: &'a T,

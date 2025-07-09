@@ -23,11 +23,11 @@ const N: u32 = 1000;
 impl STaskBody for ETaskbodyForTLedTaskbody<'_>{
 
 	fn main(&'static self) {
-		let c_led = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 		print!("Processor1: LED task start", );
 
 		print!("LED setup", );
-		c_led.set_up();
+		lg.c_led.set_up();
 		delay(duration!(ms: 1000)).expect("delay failed");
 
 		let mut dispatch_time :HrtCnt = 0;
@@ -51,8 +51,8 @@ impl STaskBody for ETaskbodyForTLedTaskbody<'_>{
 				start = fch_hrt();
 			}
 
-			// c_led.light_on();
-			c_led.light_off();
+			lg.c_led.light_on();
+			// lg.c_led.light_off();
 
 			unsafe{ 
 				end = fch_hrt();
@@ -62,10 +62,12 @@ impl STaskBody for ETaskbodyForTLedTaskbody<'_>{
 			duration = end - start - overhead;
 			print!("%tu,", duration );
 
-			c_led.light_on();
-			// c_led.light_off();
+			delay(duration!(ms: 10)).expect("delay failed");
 
-			delay(duration!(ms: 50)).expect("delay failed");
+			// lg.c_led.light_on();
+			lg.c_led.light_off();
+
+			delay(duration!(ms: 10)).expect("delay failed");
 		}
 	}
 }

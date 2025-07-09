@@ -130,7 +130,7 @@ class FMPHandlerPlugin < CelltypePlugin
         cfg_str = @@handler_list[@class_name][1]
       when :Rust
         temp_str = @@handler_list_rs[@class_name][1]
-        cfg_str = temp_str.gsub("<<tecs_rust_start>>", "tecs_rust_start_#{cell.get_global_name.to_s.gsub(/(.)([A-Z])/, '\\1_\\2').downcase}")
+        cfg_str = temp_str.gsub("<<tecs_rust_start>>", "tecs_rust_start_#{cell.get_global_name.to_s.gsub(/([a-z0-9])([A-Z])/, '\1_\2').gsub(/([A-Z])([A-Z][a-z])/, '\1_\2').downcase}")
       end
       file.print indent
     end

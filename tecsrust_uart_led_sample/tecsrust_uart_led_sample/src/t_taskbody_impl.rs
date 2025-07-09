@@ -1,4 +1,4 @@
-use crate::{t_taskbody::*, s_task_body::*, s_xuart_measure::*, s_dataqueue_rs::*, s_led::*};
+use crate::{t_taskbody::*, s_task_body::*, s_x_uart_measure::*, s_dataqueue_rs::*, s_led::*};
 use crate::print;
 use itron::time::{duration, Duration, timeout, Timeout};
 use itron::task::*;
@@ -15,7 +15,7 @@ impl STaskBody for ETaskbodyForTTaskbody<'_>{
 			let mut data = lg.c_dataqueue.receive();
 			match data {
 				Ok(data) => {
-					lg.c_xuart.put_char(&(data as u8));
+					lg.c_x_uart.put_char(&(data as u8));
 
 					if((data == b'\n'.into()) && (lg.var.buffer_count != 0)){ // CRは13で\r、LFは10で\n
 						let mut data_led: itron::dataqueue::DataElement = 0;
@@ -28,7 +28,7 @@ impl STaskBody for ETaskbodyForTTaskbody<'_>{
 						lg.var.buffer_count = 0;
 		
 						if let Err(_) = lg.c_dataqueue_led.send_force(&data_led) {
-							lg.c_xuart.put_char(&b'E');
+							lg.c_x_uart.put_char(&b'E');
 						}
 					}
 		
@@ -45,7 +45,7 @@ impl STaskBody for ETaskbodyForTTaskbody<'_>{
 
 				}
 				Err(e) => {
-					lg.c_xuart.put_char(&b'E');
+					lg.c_x_uart.put_char(&b'E');
 				}
 			}
 		}

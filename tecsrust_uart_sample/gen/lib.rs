@@ -17,12 +17,12 @@ mod t_isr_rs;
 mod si_handler_body;
 mod t_initialize_routine_rs;
 mod s_routine_body;
-mod t_xuart_taskbody;
-mod t_xuart_taskbody_impl;
-mod s_xuart_measure;
-mod si_sio_cbr;
 mod t_xuart;
 mod t_xuart_impl;
+mod si_sio_cbr;
+mod s_xuart_measure;
+mod t_xuart_taskbody;
+mod t_xuart_taskbody_impl;
 mod t_xuart_interrupt_initialize_body;
 mod t_xuart_interrupt_initialize_body_impl;
 mod t_taskbody;
@@ -37,13 +37,13 @@ use crate::t_task_rs::*;
 use s_task_body::*;
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor1_symmetric__uart_task(_: usize) {
-	RPROCESSOR1SYMMETRIC_UARTTASK.c_task_body.main();
+pub extern "C" fn tecs_rust_start_r_processor1_symmetric__task1(_: usize) {
+	RPROCESSOR1SYMMETRIC_TASK1.c_task_body.main();
 }
 
 #[no_mangle]
-pub extern "C" fn tecs_rust_start_r_processor2_symmetric__button_task(_: usize) {
-	RPROCESSOR2SYMMETRIC_BUTTONTASK.c_task_body.main();
+pub extern "C" fn tecs_rust_start_r_processor2_symmetric__task2(_: usize) {
+	RPROCESSOR2SYMMETRIC_TASK2.c_task_body.main();
 }
 
 use crate::t_isr_rs::*;

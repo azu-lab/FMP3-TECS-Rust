@@ -2,7 +2,8 @@ use crate::{s_xuart_measure::*, t_xuart::*};
 
 use crate::{s_xuart_measure::*, t_xuart::*, si_dataqueue_rs::*, t_dataqueue_rs::*};
 
-pub struct TXuartTaskbody<'a, T, U>where
+pub struct TXuartTaskbody<'a, T, U>
+where
 	T: SXuartMeasure,
 	U: SiDataqueueRs,
 {
@@ -16,6 +17,15 @@ pub struct ETaskbodyForTXuartTaskbody<'a>{
 
 pub struct EXuartMainForTXuartTaskbody<'a>{
 	pub cell: &'a TXuartTaskbody<'a, EXuartForTXuart<'a>, EiDataqueueForTDataqueueRs<'a>>,
+}
+
+pub struct LockGuardForTXuartTaskbody<'a, T, U>
+where
+	T: SXuartMeasure,
+	U: SiDataqueueRs,
+{
+	pub c_xuart: &'a T,
+	pub c_dataqueue: &'a U,
 }
 
 #[link_section = ".rodata"]
@@ -35,10 +45,10 @@ pub static EXUARTMAINFORRPROCESSOR1SYMMETRIC_UARTTASKBODY: EXuartMainForTXuartTa
 };
 
 impl<T: SXuartMeasure, U: SiDataqueueRs> TXuartTaskbody<'_, T, U> {
-	pub fn get_cell_ref(&'static self) -> (&'static T, &'static U) {
-		(
-			self.c_xuart,
-			self.c_dataqueue
-		)
+	pub fn get_cell_ref(&'static self) -> LockGuardForTXuartTaskbody<'_, T, U> {
+		LockGuardForTXuartTaskbody {
+			c_xuart: self.c_xuart,
+			c_dataqueue: self.c_dataqueue,
+		}
 	}
 }

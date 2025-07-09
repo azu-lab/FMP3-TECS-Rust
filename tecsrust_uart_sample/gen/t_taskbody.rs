@@ -1,6 +1,7 @@
 use crate::{s_xuart_measure::*, t_xuart::*, s_dataqueue_rs::*, t_dataqueue_rs::*};
 
-pub struct TTaskbody<'a, T, U>where
+pub struct TTaskbody<'a, T, U>
+where
 	T: SXuartMeasure,
 	U: SDataqueueRs,
 {
@@ -10,6 +11,15 @@ pub struct TTaskbody<'a, T, U>where
 
 pub struct ETaskbodyForTTaskbody<'a>{
 	pub cell: &'a TTaskbody<'a, EXuartForTXuart<'a>, EDataqueueForTDataqueueRs<'a>>,
+}
+
+pub struct LockGuardForTTaskbody<'a, T, U>
+where
+	T: SXuartMeasure,
+	U: SDataqueueRs,
+{
+	pub c_xuart: &'a T,
+	pub c_dataqueue: &'a U,
 }
 
 #[link_section = ".rodata"]
@@ -24,10 +34,10 @@ pub static ETASKBODYFORRPROCESSOR2SYMMETRIC_TASKBODY: ETaskbodyForTTaskbody = ET
 };
 
 impl<T: SXuartMeasure, U: SDataqueueRs> TTaskbody<'_, T, U> {
-	pub fn get_cell_ref(&'static self) -> (&'static T, &'static U) {
-		(
-			self.c_xuart,
-			self.c_dataqueue
-		)
+	pub fn get_cell_ref(&'static self) -> LockGuardForTTaskbody<'_, T, U> {
+		LockGuardForTTaskbody {
+			c_xuart: self.c_xuart,
+			c_dataqueue: self.c_dataqueue,
+		}
 	}
 }

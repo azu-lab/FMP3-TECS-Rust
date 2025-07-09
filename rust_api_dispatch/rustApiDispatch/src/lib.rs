@@ -89,21 +89,21 @@ pub extern "C" fn tecs_rust_start_r_processor1_symmetric__task1_1(_: usize) {
         // }
 
         /* c_task.change_priority(&set_priority); ↓ TASK2_2(attr: TA_ACT, pri: 10) */
-        // {
-        //     while (c_task.info().unwrap().state() == Running || c_task.priority().unwrap() != default_priority){
-        //         delay(duration!(ms: 5)).expect("delay failed");
-        //     }
-        //     c_task.set_priority(default_priority);
-        //     c_task.activate();
-        // }
+        {
+            while (c_task.info().unwrap().state() == Running || c_task.priority().unwrap() != default_priority){
+                delay(duration!(ms: 5)).expect("delay failed");
+            }
+            c_task.set_priority(default_priority);
+            c_task.activate();
+        }
 
         /* c_taskmig.migrate(&processor2); ↓ TASK_MIG(attr: TA_NULL, pri: 6) */
-        {
-        	while c_taskmig.info().unwrap().state() != Dormant {
-        		delay(duration!(ms: 5)).expect("delay failed");
-        	}
-        	c_taskmig.activate();
-        }
+        // {
+        // 	while c_taskmig.info().unwrap().state() != Dormant {
+        // 		delay(duration!(ms: 5)).expect("delay failed");
+        // 	}
+        // 	c_taskmig.activate();
+        // }
 
         // wait_result = c_semaphore.wait();
         // print!("Processor1: act_tsk",);
@@ -145,10 +145,10 @@ pub extern "C" fn tecs_rust_start_r_processor1_symmetric__task1_1(_: usize) {
         // act_result = c_task.activate();
         // acto_result = c_task.migrate_and_activate(processor2);
         // get_result = c_task.priority();
-        // chg_result = c_task.set_priority(set_priority);
+        chg_result = c_task.set_priority(set_priority);
 
         // wait_result = c_semaphore.wait();
-        mig_result = c_taskmig.migrate(processor2); // mig_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
+        // mig_result = c_taskmig.migrate(processor2); // mig_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
         
         // unsafe{ ter_result = c_taskmig.terminate();} // ter_tsk は 呼び出したタスクと同じプロセッサに割り付けられているタスクのみに適用可能
 

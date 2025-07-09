@@ -20,13 +20,13 @@ const N: u32 = 1000;
 impl STaskBody for ETaskbodyForTXuartTaskbody<'_>{
 
 	fn main(&'static self) {
-		let c_xuart = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 		delay(duration!(s: 1)).expect("delay failed");
 
 		print!("Processor1: Uart task start", );
 
-		c_xuart.open();
+		lg.c_xuart.open();
 
 		let mut dispatch_time :HrtCnt = 0;
 		let mut dispatch_end :HrtCnt = 0;
@@ -51,7 +51,7 @@ impl STaskBody for ETaskbodyForTXuartTaskbody<'_>{
 				start = fch_hrt();
 			}
 
-			result = c_xuart.put_char(&b'N');
+			result = lg.c_xuart.put_char(&b'N');
 
 			unsafe{ 
 				end = fch_hrt();

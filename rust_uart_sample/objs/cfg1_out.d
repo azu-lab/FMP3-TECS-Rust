@@ -35,7 +35,7 @@ objs/cfg1_out.o: cfg1_out.c ../kernel/kernel_int.h \
  ../kernel/alarm.h ../kernel/interrupt.h ../kernel/exception.h \
  ../kernel/kernel_unrename.h ../target/zybo_z7_gcc/target_unrename.h \
  ../arch/arm_gcc/zynq7000/chip_unrename.h \
- ../arch/arm_gcc/common/core_unrename.h gen/tTask_tecsgen.h \
+ ../arch/arm_gcc/common/core_unrename.h rustUART.h gen/tTask_tecsgen.h \
  gen/global_tecsgen.h ../tecs_kernel/tecs_kernel.h ../syssvc/serial.h \
  ../syssvc/syslog.h ../target/zybo_z7_gcc/target_syssvc.h \
  ../arch/arm_gcc/zynq7000/zynq7000.h ../arch/arm_gcc/common/core_syssvc.h \
@@ -53,7 +53,7 @@ objs/cfg1_out.o: cfg1_out.c ../kernel/kernel_int.h \
  ../target/zybo_z7_gcc/tSIOPortZyboZ7Main_inline.h \
  gen/tSemaphore_tecsgen.h ../tecs_kernel/tSemaphore_inline.h \
  gen/tSysLog_tecsgen.h gen/tPutLogZyboZ7_tecsgen.h \
- ../tecs_kernel/tTask_inline.h rustUART.h gen/tISR_tecsgen.h \
+ ../tecs_kernel/tTask_inline.h gen/tISR_tecsgen.h \
  gen/tInitializeRoutine_tecsgen.h gen/tBannerMain_tecsgen.h \
  gen/tTerminateRoutine_tecsgen.h ../target/zybo_z7_gcc/target_cfg1_out.h \
  ../arch/arm_gcc/common/core_cfg1_out.h
@@ -118,6 +118,7 @@ objs/cfg1_out.o: cfg1_out.c ../kernel/kernel_int.h \
 ../target/zybo_z7_gcc/target_unrename.h:
 ../arch/arm_gcc/zynq7000/chip_unrename.h:
 ../arch/arm_gcc/common/core_unrename.h:
+rustUART.h:
 gen/tTask_tecsgen.h:
 gen/global_tecsgen.h:
 ../tecs_kernel/tecs_kernel.h:
@@ -154,7 +155,6 @@ gen/tSemaphore_tecsgen.h:
 gen/tSysLog_tecsgen.h:
 gen/tPutLogZyboZ7_tecsgen.h:
 ../tecs_kernel/tTask_inline.h:
-rustUART.h:
 gen/tISR_tecsgen.h:
 gen/tInitializeRoutine_tecsgen.h:
 gen/tBannerMain_tecsgen.h:

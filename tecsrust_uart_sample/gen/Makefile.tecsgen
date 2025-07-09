@@ -43,7 +43,7 @@
 #  RUST_PLUGIN_TECSGEN_SRCS   .rs files of Rust plugin generated celltype.rs
 #  RUST_PLUGIN_SRCS           .rs files of Rust plugin generated
 
-TECS_IMPORT_CDLS = tecsrustUART.cdl ../tecs_kernel/kernel.cdl ../tecs_kernel/kernel_rs.cdl ../target/zybo_z7_gcc/target_class.cdl ../target/zybo_z7_gcc/class_def.cdf ../syssvc/tSerialPort.cdl ../syssvc/tSerialAdapter.cdl ../syssvc/tSysLog.cdl ../syssvc/tSysLogAdapter.cdl ../syssvc/tLogTask.cdl ../syssvc/tBanner.cdl ../target/zybo_z7_gcc/target.cdl ../target/zybo_z7_gcc/tPutLogZyboZ7.cdl ../target/zybo_z7_gcc/tSIOPortZyboZ7.cdl ../arch/arm_gcc/zynq7000/tXUartPs.cdl ./gen/tmp_FMPPlugin_post_code.cdl ./gen/tmp_FMPObjectPlugin_post_code.cdl ./gen/tmp_NotifierPlugin_post_code.cdl ./gen/tmp_FMPHandlerPlugin_post_code.cdl ./gen/tmp_RustFMP3CelltypePlugin_post_code.cdl ./gen/tmp_RustFMP3CellPlugin_post_code.cdl
+TECS_IMPORT_CDLS = tecsrustUART.cdl ../tecs_kernel/kernel.cdl ../tecs_kernel/kernel_rs.cdl ../target/zybo_z7_gcc/target_class.cdl ../target/zybo_z7_gcc/class_def.cdf ../syssvc/tSerialPort.cdl ../syssvc/tSerialAdapter.cdl ../syssvc/tSysLog.cdl ../syssvc/tSysLogAdapter.cdl ../syssvc/tLogTask.cdl ../syssvc/tBanner.cdl ../target/zybo_z7_gcc/target.cdl ../target/zybo_z7_gcc/tPutLogZyboZ7.cdl ../target/zybo_z7_gcc/tSIOPortZyboZ7.cdl ../arch/arm_gcc/zynq7000/tXUartPs.cdl tecsrustUART_def.cdl ./gen/tmp_FMPPlugin_post_code.cdl ./gen/tmp_FMPObjectPlugin_post_code.cdl ./gen/tmp_NotifierPlugin_post_code.cdl ./gen/tmp_FMPHandlerPlugin_post_code.cdl ./gen/tmp_RustFMP3CelltypePlugin_post_code.cdl ./gen/tmp_RustFMP3CellPlugin_post_code.cdl
 TECS_IMPORT_HEADERS = ../tecs_kernel/tecs_kernel.h ../syssvc/serial.h ../syssvc/syslog.h ../target/zybo_z7_gcc/target_syssvc.h ../arch/arm_gcc/zynq7000/tXUartPs.h
 TECS_IMPORTS = $(TECS_IMPORT_CDLS) $(TECS_IMPORT_HEADERS)
 
@@ -85,8 +85,8 @@ SIGNATURE_HEADERS = \
 	$(GEN_DIR)/sPutLog_tecsgen.h \
 	$(GEN_DIR)/sSysLog_tecsgen.h \
 	$(GEN_DIR)/sLogTask_tecsgen.h \
-	$(GEN_DIR)/sXUartMeasure_tecsgen.h \
 	$(GEN_DIR)/siSioCbr_tecsgen.h \
+	$(GEN_DIR)/sXUartMeasure_tecsgen.h \
 # SIGNATURE_HEADERS terminator
 
 CELLTYPE_TECSGEN_HEADERS = \
@@ -389,8 +389,8 @@ RUST_PLUGIN_SIGNATURE = \
 	$(GEN_DIR)/../$(APPLNAME)/src/s_put_log.rs \
 	$(GEN_DIR)/../$(APPLNAME)/src/s_sys_log.rs \
 	$(GEN_DIR)/../$(APPLNAME)/src/s_log_task.rs \
-	$(GEN_DIR)/../$(APPLNAME)/src/s_xuart_measure.rs \
 	$(GEN_DIR)/../$(APPLNAME)/src/si_sio_cbr.rs \
+	$(GEN_DIR)/../$(APPLNAME)/src/s_xuart_measure.rs \
 # RUST_PLUGIN_SIGNATURE terminator
 
 # RUST_PLUGIN_CELLTYPE_SRCS: sources of Rust celltype code written by user
@@ -399,8 +399,8 @@ RUST_PLUGIN_CELLTYPE_SRCS = \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_dataqueue_rs_impl.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_isr_rs_impl.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_initialize_routine_rs_impl.rs \
- 	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_taskbody_impl.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_impl.rs \
+ 	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_taskbody_impl.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_interrupt_initialize_body_impl.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_taskbody_impl.rs \
 # RUST_PLUGIN_CELLTYPE_SRCS terminator
@@ -411,8 +411,8 @@ RUST_PLUGIN_TECSGEN_SRCS = \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_dataqueue_rs.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_isr_rs.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_initialize_routine_rs.rs \
- 	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_taskbody.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart.rs \
+ 	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_taskbody.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_xuart_interrupt_initialize_body.rs \
  	$(GEN_DIR)/../$(APPLNAME)/src/t_taskbody.rs \
 # RUST_PLUGIN_TECSGEN_SRCS terminator

@@ -3,8 +3,7 @@ use core::num::NonZeroI32;
 use crate::kernel_cfg::*;
 use crate::{s_task_body::*, t_led_taskbody::*, t_xuart_taskbody::*, t_button_taskbody::*};
 
-pub struct TTaskRs<'a>
-{
+pub struct TTaskRs<'a>{
 	pub c_task_body: &'a (dyn STaskBody + Sync + Send),
 	task_ref: TaskRef<'a>,
 }
@@ -23,6 +22,11 @@ pub struct EiActivateNotificationHandlerForTTaskRs<'a>{
 
 pub struct EiWakeUpNotificationHandlerForTTaskRs<'a>{
 	pub cell: &'a TTaskRs<'a>,
+}
+
+pub struct LockGuardForTTaskRs<'a>{
+	pub c_task_body: &'a (dyn STaskBody + Sync + Send),
+	pub task_ref: &'a TaskRef<'a>,
 }
 
 #[link_section = ".rodata"]
@@ -105,10 +109,10 @@ pub static EIWAKEUPNOTIFICATIONHANDLERFORRPROCESSOR2SYMMETRIC_BUTTONTASK: EiWake
 
 impl<> TTaskRs<'_> {
 	#[inline]
-	pub fn get_cell_ref(&'static self) -> (&'static dyn STaskBody, &'static TaskRef) {
-		(
-			self.c_task_body,
-			&self.task_ref
-		)
+	pub fn get_cell_ref(&'static self) -> LockGuardForTTaskRs<'_> {
+		LockGuardForTTaskRs {
+			c_task_body: self.c_task_body,
+			task_ref: &self.task_ref,
+		}
 	}
 }

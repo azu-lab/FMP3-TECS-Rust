@@ -90,15 +90,7 @@
 #line 124 "../arch/arm_gcc/common/gic_ipi.cfg"
 #endif
 #line 1 "rustUART.cfg"
-#include "tTask_tecsgen.h"
-#line 2 "rustUART.cfg"
 #include "rustUART.h"
-#line 4 "rustUART.cfg"
-#include "tISR_tecsgen.h"
-#line 5 "rustUART.cfg"
-#include "tInitializeRoutine_tecsgen.h"
-#line 6 "rustUART.cfg"
-#include "tTerminateRoutine_tecsgen.h"
 #line 1 "./gen/tecsgen.cfg"
 #include "tTask_tecsgen.h"
 #line 3 "./gen/tecsgen.cfg"
@@ -1190,56 +1182,56 @@ const unsigned_t TOPPERS_cfg_valueof_teratr_64 = (unsigned_t)(TA_NULL);
 #line 40 "./gen/tecsgen.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_64 = (signed_t)(CLS_PRC1);
 
-#line 13 "rustUART.cfg"
+#line 8 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_static_api_65 = 65;
 #define TSKID_UART	(<>)
-#line 13 "rustUART.cfg"
+#line 8 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_valueof_tskatr_65 = (unsigned_t)(TA_ACT);
-#line 13 "rustUART.cfg"
+#line 8 "rustUART.cfg"
 const signed_t TOPPERS_cfg_valueof_itskpri_65 = (signed_t)(7);
-#line 13 "rustUART.cfg"
+#line 8 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_valueof_stksz_65 = (unsigned_t)(2048);
-#line 11 "rustUART.cfg"
+#line 6 "rustUART.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_65 = (signed_t)(CLS_PRC1);
 
-#line 17 "rustUART.cfg"
+#line 10 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_static_api_66 = 66;
-#define TSKID_LOOP	(<>)
-#line 17 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_tskatr_66 = (unsigned_t)(TA_ACT);
-#line 17 "rustUART.cfg"
-const signed_t TOPPERS_cfg_valueof_itskpri_66 = (signed_t)(7);
-#line 17 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_stksz_66 = (unsigned_t)(2048);
-#line 15 "rustUART.cfg"
-const signed_t TOPPERS_cfg_valueof_CLASS_66 = (signed_t)(CLS_PRC2);
-
-#line 22 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_static_api_67 = 67;
 #define DTQID_UART	(<>)
-#line 22 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_dtqatr_67 = (unsigned_t)(TA_NULL);
-#line 22 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_dtqcnt_67 = (unsigned_t)(1);
-#line 20 "rustUART.cfg"
+#line 10 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_dtqatr_66 = (unsigned_t)(TA_NULL);
+#line 10 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_dtqcnt_66 = (unsigned_t)(1);
+#line 6 "rustUART.cfg"
+const signed_t TOPPERS_cfg_valueof_CLASS_66 = (signed_t)(CLS_PRC1);
+
+#line 12 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_static_api_67 = 67;
+#define ISRID_PRC2	(<>)
+#line 12 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_isratr_67 = (unsigned_t)(TA_NULL);
+#line 12 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_intno_67 = (unsigned_t)(82);
+#line 12 "rustUART.cfg"
+const signed_t TOPPERS_cfg_valueof_isrpri_67 = (signed_t)(1);
+#line 6 "rustUART.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_67 = (signed_t)(CLS_PRC1);
 
-#line 27 "rustUART.cfg"
+#line 14 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_static_api_68 = 68;
-#define ISRID_PRC2	(<>)
-#line 27 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_isratr_68 = (unsigned_t)(TA_NULL);
-#line 27 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_intno_68 = (unsigned_t)(82);
-#line 27 "rustUART.cfg"
-const signed_t TOPPERS_cfg_valueof_isrpri_68 = (signed_t)(1);
-#line 25 "rustUART.cfg"
+#line 14 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_iniatr_68 = (unsigned_t)(TA_NULL);
+#line 6 "rustUART.cfg"
 const signed_t TOPPERS_cfg_valueof_CLASS_68 = (signed_t)(CLS_PRC1);
 
-#line 32 "rustUART.cfg"
+#line 18 "rustUART.cfg"
 const unsigned_t TOPPERS_cfg_static_api_69 = 69;
-#line 32 "rustUART.cfg"
-const unsigned_t TOPPERS_cfg_valueof_iniatr_69 = (unsigned_t)(TA_NULL);
-#line 30 "rustUART.cfg"
-const signed_t TOPPERS_cfg_valueof_CLASS_69 = (signed_t)(CLS_PRC1);
+#define TSKID_LOOP	(<>)
+#line 18 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_tskatr_69 = (unsigned_t)(TA_ACT);
+#line 18 "rustUART.cfg"
+const signed_t TOPPERS_cfg_valueof_itskpri_69 = (signed_t)(7);
+#line 18 "rustUART.cfg"
+const unsigned_t TOPPERS_cfg_valueof_stksz_69 = (unsigned_t)(2048);
+#line 16 "rustUART.cfg"
+const signed_t TOPPERS_cfg_valueof_CLASS_69 = (signed_t)(CLS_PRC2);
 

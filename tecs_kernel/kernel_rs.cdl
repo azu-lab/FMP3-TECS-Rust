@@ -120,10 +120,12 @@ celltype tTaskRs {
 						/* 0を，未定義を示す値として使っている */
 	};
 
+	/*
 	FACTORY {
 		write("tecsgen.cfg", "#include \"$ct$_tecsgen.h\"");
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
+	*/
 };
 
 typedef int_t SemaphoreRef;
@@ -164,9 +166,11 @@ celltype tSemaphoreRs {
 		[omit] uint_t	maxCount = 1;
 	};
 
+	/*
 	FACTORY {
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
+	*/
 };
 
 typedef int_t DataqueueRef;
@@ -215,32 +219,34 @@ celltype tDataqueueRs {
 
 	attr {
 		[omit] ID				id = C_EXP("DTQID_$id$");
-		DataqueueRef	semaphore_ref = C_EXP("unsafe{DataqueueRef::from_raw_nonnull(NonZeroI32::new(SEMID_$id$).unwrap())}");
+		DataqueueRef	dataqueue_ref = C_EXP("unsafe{DataqueueRef::from_raw_nonnull(NonZeroI32::new(SEMID_$id$).unwrap())}");
 		[omit] ATR		attribute = C_EXP("TA_NULL");
 		[omit] uint_t	dataCount = 1;
 		[omit] void		*dataqueueManagementBuffer = C_EXP("NULL");
 	};
 
+	/*
 	FACTORY {
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
+	*/
 };
 
 
 // TODO: 割込みは itron_rs で実装されていないため、暫定的な実装を行う
 
-typedef int_t ITRONResult__empty__ER__;
-typedef int_t ITRONResult__bool__ER__;
+typedef int_t Result__empty__ER__;
+typedef int_t Result__bool__ER__;
 
 /*
  *  割込み要求ライン操作のシグニチャ（タスクコンテキスト用）
  */
 signature sInterruptRequestRs {
-	ITRONResult__empty__ER__		disable(void);
-	ITRONResult__empty__ER__		enable(void);
-	ITRONResult__empty__ER__		clear(void);
-	ITRONResult__empty__ER__		raise(void);
-	ITRONResult__bool__ER__			probe(void);
+	Result__empty__ER__		disable(void);
+	Result__empty__ER__		enable(void);
+	Result__empty__ER__		clear(void);
+	Result__empty__ER__		raise(void);
+	Result__bool__ER__		probe(void);
 };
 
 /*
@@ -259,9 +265,11 @@ celltype tInterruptRequestRs {
 	};
 
 	/* 警告メッセージを抑止するための記述 */
+	/*
 	factory {
 		write("tecsgen.cfg", "");
 	};
+	*/
 };
 
 /*
@@ -270,7 +278,7 @@ celltype tInterruptRequestRs {
  */
 [active, generate(FMPHandlerPlugin, "INT_SERVICE_ROUTINE")]
 celltype tIsrRs {
-	call	siHandlerBody	ciISRBody;
+	call	siHandlerBody	ciIsrBody;
 
 	attr {
 		ID				id = C_EXP("ISRID_$id$");
@@ -279,10 +287,12 @@ celltype tIsrRs {
 		[omit] PRI		isrPriority = 1;
 	};
 
+	/*
 	FACTORY {
 		write("tecsgen.cfg", "#include \"$ct$_tecsgen.h\"");
 		write("$ct$_factory.h", "#include \"kernel_cfg.h\"");
 	};
+	*/
 };
 
 
@@ -299,7 +309,9 @@ celltype tInitializeRoutineRs {
 		[omit] ATR		attribute = C_EXP("TA_NULL");
 	};
 
+	/*
 	FACTORY {
 		write("tecsgen.cfg", "#include \"$ct$_tecsgen.h\"");
 	};
+	*/
 };

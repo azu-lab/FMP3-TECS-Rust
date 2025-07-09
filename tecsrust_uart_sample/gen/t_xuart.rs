@@ -1,6 +1,7 @@
 use crate::{si_sio_cbr::*, t_xuart_taskbody::*};
 
-pub struct TXuart<'a, T>where
+pub struct TXuart<'a, T>
+where
 	T: SiSioCbr,
 {
 	c_xuart_main: &'a T,
@@ -16,6 +17,17 @@ pub struct EXuartForTXuart<'a>{
 
 pub struct EiHandlerBodyForTXuart<'a>{
 	pub cell: &'a TXuart<'a, EXuartMainForTXuartTaskbody<'a>>,
+}
+
+pub struct LockGuardForTXuart<'a, T>
+where
+	T: SiSioCbr,
+{
+	pub c_xuart_main: &'a T,
+	pub base_address: &'a u32,
+	pub mode: &'a u32,
+	pub baudgen: &'a u32,
+	pub bauddiv: &'a u32,
 }
 
 #[link_section = ".rodata"]
@@ -38,13 +50,13 @@ pub static EIHANDLERBODYFORRPROCESSOR1SYMMETRIC_UART: EiHandlerBodyForTXuart = E
 };
 
 impl<T: SiSioCbr> TXuart<'_, T> {
-	pub fn get_cell_ref(&'static self) -> (&'static T, &'static u32, &'static u32, &'static u32, &'static u32) {
-		(
-			self.c_xuart_main,
-			&self.base_address,
-			&self.mode,
-			&self.baudgen,
-			&self.bauddiv
-		)
+	pub fn get_cell_ref(&'static self) -> LockGuardForTXuart<'_, T> {
+		LockGuardForTXuart {
+			c_xuart_main: self.c_xuart_main,
+			base_address: &self.base_address,
+			mode: &self.mode,
+			baudgen: &self.baudgen,
+			bauddiv: &self.bauddiv,
+		}
 	}
 }

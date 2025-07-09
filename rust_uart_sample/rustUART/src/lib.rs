@@ -8,23 +8,9 @@ mod xuart;
 use crate::tecs_print::*;
 use core::num::NonZeroI32;
 use itron::task::*;
-use itron::semaphore::*;
-use itron::error::Error;
-use itron::processor::Processor;
 use kernel_cfg::*;
-use itron::abi::*;
 use itron::time::{duration, Duration, timeout, Timeout};
-use itron::task::State::*;
-use core::ptr::{write_volatile, read_volatile};
 use xuart::*;
-
-extern "C" {
-	fn fch_hrt() -> HrtCnt;
-	fn loc_cpu() -> ER;
-	fn unl_cpu() -> ER;
-	fn dis_dsp() -> ER;
-	fn ena_dsp() -> ER;
-}
 
 #[panic_handler]
 fn panic(_panic: &core::panic::PanicInfo<'_>) -> ! {
@@ -43,22 +29,22 @@ pub extern "C" fn tecs_rust_start_r_processor1_symmetric__uart_task(_: usize) {
     let c_xuart = xuart::Xuart::open(0xE0001000);
     c_xuart.set_up(0x0020, 0x007c, 0x06);
 
-    let mut result = true;
+    // let mut result = true;
 
-    loop{
+    // loop{
 
-        result = c_xuart.put_char(b'N');
+    //     result = c_xuart.put_char(b'N');
 
 
-        if(result != true)
-        {
-            print!("uart false",);
-        }
+    //     if(result != true)
+    //     {
+    //         print!("uart false",);
+    //     }
 
-        // _ = c_xuart.put_char(&b'\n');
+    //     // _ = c_xuart.put_char(&b'\n');
 
-        delay(duration!(s: 1)).expect("delay failed");
-    }
+    //     delay(duration!(s: 1)).expect("delay failed");
+    // }
 }
 
 #[no_mangle]

@@ -9,48 +9,48 @@ use itron::time::{duration, Duration, timeout, Timeout};
 impl STaskBody for ETaskbodyForTXuartTaskbody<'_>{
 
 	fn main(&'static self) {
-		let (c_xuart, c_dataqueue) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 		delay(duration!(s: 1)).expect("delay failed");
 
 		// print!("Processor1: Uart task start", );
 		// delay(duration!(ms: 100)).expect("delay failed");
 
-		c_xuart.open();
+		lg.c_xuart.open();
 
-		let mut result = true;
+		// let mut result = true;
 
-		loop{
+		// loop{
 
-			result = c_xuart.put_char(&b'N');
+		// 	result = lg.c_xuart.put_char(&b'N');
 
 
-			if(result != true)
-			{
-				print!("uart false",);
-			}
+		// 	if(result != true)
+		// 	{
+		// 		print!("uart false",);
+		// 	}
 
-			// _ = c_xuart.put_char(&b'\n');
+		// 	// _ = lg.c_xuart.put_char(&b'\n');
 
-			delay(duration!(s: 1)).expect("delay failed");
-		}
+		// 	delay(duration!(s: 1)).expect("delay failed");
+		// }
 	}
 }
 
 impl SiSioCbr for EXuartMainForTXuartTaskbody<'_>{
 
 	fn ready_send(&'static self) {
-		let (c_xuart, c_dataqueue) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	fn ready_receive(&'static self) {
-		let (c_xuart, c_dataqueue) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 		let mut c: u8 = 0;
-		let result = c_xuart.get_char(&mut c);
+		let result = lg.c_xuart.get_char(&mut c);
 		if result {
-			// c_xuart.put_char(&c);
+			// lg.c_xuart.put_char(&c);
 			let data: itron::dataqueue::DataElement = c.into();
-			c_dataqueue.send_force(&data);
+			lg.c_dataqueue.send_force(&data);
 		}
 	}
 }

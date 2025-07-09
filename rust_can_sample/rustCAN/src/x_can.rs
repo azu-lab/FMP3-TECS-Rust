@@ -381,5 +381,3 @@ pub fn x_can_interrupt_clear(mask: u32){
 pub fn x_can_interrupt_status() -> u32{
     x_can_read_reg(BASE_ADDRESS as *const u32, XCAN_ISR_OFFSET)
 }
-
-

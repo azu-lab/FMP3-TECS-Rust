@@ -42,36 +42,36 @@ const XUART_BAUDDIV_115K: u32 = 0x06;
 impl SXuartMeasure for EXuartForTXuart<'_>{
 
 	fn open(&'static self) {
-		let (base_address, mode, baudgen, bauddiv) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 		unsafe{
-			write_volatile((*base_address + XUART_IDR_OFFSET) as *mut u32, XUART_IXR_ALL);
+			write_volatile((*lg.base_address + XUART_IDR_OFFSET) as *mut u32, XUART_IXR_ALL);
 
-			write_volatile((*base_address + XUART_ISR_OFFSET) as *mut u32, read_volatile((*base_address + XUART_ISR_OFFSET) as *const u32));
+			write_volatile((*lg.base_address + XUART_ISR_OFFSET) as *mut u32, read_volatile((*lg.base_address + XUART_ISR_OFFSET) as *const u32));
 
-			write_volatile((*base_address + XUART_CR_OFFSET) as *mut u32,
+			write_volatile((*lg.base_address + XUART_CR_OFFSET) as *mut u32,
 						   XUART_CR_TXRST | XUART_CR_RXRST | XUART_CR_TX_DIS | XUART_CR_RX_DIS);
 			
-			write_volatile((*base_address + XUART_BAUDGEN_OFFSET) as *mut u32, *baudgen);
-			write_volatile((*base_address + XUART_BAUDDIV_OFFSET) as *mut u32, *bauddiv);
+			write_volatile((*lg.base_address + XUART_BAUDGEN_OFFSET) as *mut u32, *lg.baudgen);
+			write_volatile((*lg.base_address + XUART_BAUDDIV_OFFSET) as *mut u32, *lg.bauddiv);
 
-			write_volatile((*base_address + XUART_MR_OFFSET) as *mut u32, *mode);
+			write_volatile((*lg.base_address + XUART_MR_OFFSET) as *mut u32, *lg.mode);
 
-			write_volatile((*base_address + XUART_RXWM_OFFSET) as *mut u32, 0x01);
+			write_volatile((*lg.base_address + XUART_RXWM_OFFSET) as *mut u32, 0x01);
 			
-			write_volatile((*base_address + XUART_RXTOUT_OFFSET) as *mut u32, 0x10);
+			write_volatile((*lg.base_address + XUART_RXTOUT_OFFSET) as *mut u32, 0x10);
 
-			write_volatile((*base_address + XUART_CR_OFFSET) as *mut u32, XUART_CR_TX_EN | XUART_CR_RX_EN | XUART_CR_STOPPRK);
+			write_volatile((*lg.base_address + XUART_CR_OFFSET) as *mut u32, XUART_CR_TX_EN | XUART_CR_RX_EN | XUART_CR_STOPPRK);
 		}
 	}
 
 	fn put_char(&'static self, c: &u8) -> bool{
-		let (base_address, mode, baudgen, bauddiv) = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 		unsafe{
-			if((read_volatile((*base_address + XUART_SR_OFFSET) as *const u32) & XUART_SR_TXFULL) == 0x00)
+			if((read_volatile((*lg.base_address + XUART_SR_OFFSET) as *const u32) & XUART_SR_TXFULL) == 0x00)
 			{
-				write_volatile((*base_address + XUART_FIFO_OFFSET) as *mut u32, *c as u32);
+				write_volatile((*lg.base_address + XUART_FIFO_OFFSET) as *mut u32, *c as u32);
 				true
 			}else{
 				false

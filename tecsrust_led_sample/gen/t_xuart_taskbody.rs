@@ -11,6 +11,13 @@ pub struct ETaskbodyForTXuartTaskbody<'a>{
 	pub cell: &'a TXuartTaskbody<'a, EXuartForTXuart<'a>>,
 }
 
+pub struct LockGuardForTXuartTaskbody<'a, T>
+where
+	T: SXuartMeasure,
+{
+	pub c_xuart: &'a T,
+}
+
 #[link_section = ".rodata"]
 pub static RPROCESSOR1SYMMETRIC_UARTTASKBODY: TXuartTaskbody<EXuartForTXuart> = TXuartTaskbody {
 	c_xuart: &EXUARTFORRPROCESSOR1SYMMETRIC_UART,
@@ -22,7 +29,9 @@ pub static ETASKBODYFORRPROCESSOR1SYMMETRIC_UARTTASKBODY: ETaskbodyForTXuartTask
 };
 
 impl<T: SXuartMeasure> TXuartTaskbody<'_, T> {
-	pub fn get_cell_ref(&'static self) -> &'static T {
-		self.c_xuart
+	pub fn get_cell_ref(&'static self) -> LockGuardForTXuartTaskbody<'_, T> {
+		LockGuardForTXuartTaskbody {
+			c_xuart: self.c_xuart,
+		}
 	}
 }

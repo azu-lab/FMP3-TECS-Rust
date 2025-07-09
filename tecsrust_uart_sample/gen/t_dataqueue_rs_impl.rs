@@ -4,47 +4,47 @@ impl SDataqueueRs for EDataqueueForTDataqueueRs<'_>{
 
 	#[inline]
 	fn send(&'static self, data: &DataElement) -> Result<(), Error<SendError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn send_polling(&'static self, data: &DataElement) -> Result<(), Error<TrySendError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn send_timeout(&'static self, data: &DataElement, timeout: &Timeout) -> Result<(), Error<SendTimeoutError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn send_force(&'static self, data: &DataElement) -> Result<(), Error<SendForcedError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn receive(&'static self) -> Result<DataElement, Error<RecvError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn receive_polling(&'static self) -> Result<DataElement, Error<TryRecvError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn receive_timeout(&'static self, timeout: &Timeout) -> Result<DataElement, Error<RecvTimeoutError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn initialize(&'static self) -> Result<(), Error<InitializeError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn refer(&'static self) -> Result<Info, Error<InfoError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 }
@@ -53,12 +53,12 @@ impl SiDataqueueRs for EiDataqueueForTDataqueueRs<'_>{
 
 	#[inline]
 	fn send_polling(&'static self, data: &DataElement) -> Result<(), Error<TrySendError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 	#[inline]
 	fn send_force(&'static self, data: &DataElement) -> Result<(), Error<SendForcedError>>{
-		let dataqueue_ref = self.cell.get_cell_ref();
+		let lg = self.cell.get_cell_ref();
 
 	}
 }

@@ -116,42 +116,13 @@ region rProcessor1Migratable {
    //};
 };
 
-signature sXUartMeasure {
-  void open(void);
-  bool_t putChar([in] uint8_t c);
-  bool_t getChar([out] uint8_t *c);
-};
-
-/*
- *  ターゲット依存部からのコールバック
- */
-[callback]
-signature siSioCbr {
-	void	readySend(void);
-	void	readyReceive(void);
-};
+import("tecsrustUART_def.cdl");
 
 celltype tXUartTaskbody {
   call sXUartMeasure cXUart;
   call siDataqueueRs cDataqueue;
   entry sTaskBody eTaskbody;
   entry siSioCbr eXUartMain;
-};
-
-celltype tXUart {
-  call siSioCbr cXUartMain;
-  entry sXUartMeasure eXUart;
-  entry siHandlerBody eiHandlerBody;
-  attr {
-    uint32_t base_address;
-    uint32_t mode;
-    uint32_t baudgen;
-    uint32_t bauddiv;
-  };
-};
-
-celltype tLoopTaskbody {
-  entry sTaskBody eTaskbody;
 };
 
 celltype tXUartInterruptInitializeBody {
@@ -162,7 +133,7 @@ celltype tXUartInterruptInitializeBody {
 region rProcessor1Symmetric{
 
     [generate(RustFMP3Plugin, "TASK, lib")]
-    cell tTaskRs UartTask {
+    cell tTaskRs Task1 {
       /* 呼び口の結合 */
       cTaskBody = rProcessor1Symmetric::UartTaskbody.eTaskbody;
       /* 属性の設定 */
@@ -187,14 +158,6 @@ region rProcessor1Symmetric{
       baudgen = C_EXP("0x007c");
       bauddiv = C_EXP("0x06");
     };
-
-  /*
-    [generate(RustFMP3Plugin, "INT_REQUEST, lib")]
-    cell tInterruptRequestRs UartInt {
-      interruptNumber = 82;
-      interruptPriority = -4;
-    };
-  */
 
     [generate(RustFMP3Plugin, "INT_SERVICE_ROUTINE, lib")]
     cell tIsrRs UartIsr {
@@ -232,7 +195,7 @@ celltype tTaskbody {
 region rProcessor2Symmetric{
 
     [generate(RustFMP3Plugin, "TASK, lib")]
-    cell tTaskRs ButtonTask {
+    cell tTaskRs Task2 {
       /* 呼び口の結合 */
       cTaskBody = rProcessor2Symmetric::TaskBody.eTaskbody;
       /* 属性の設定 */
@@ -242,10 +205,6 @@ region rProcessor2Symmetric{
       stackSize = 2048;
       attribute = C_EXP("TA_ACT");
     };
-
-    //[generate(RustFMP3Plugin, "lib")]
-    //cell tLoopTaskbody LoopTaskbody {
-    //};
 
     [generate(RustFMP3Plugin, "lib")]
     cell tTaskbody TaskBody {

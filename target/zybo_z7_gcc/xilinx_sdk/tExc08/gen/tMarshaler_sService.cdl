@@ -1,0 +1,14 @@
+/* GenTransparentMarshler0001 */
+celltype tMarshaler_sService {
+  entry ::sService eClientEntry;
+  call sTDR        cTDR;
+  call sEventflag  cEventflag;
+  [optional]
+    call sSemaphore cLockChannel;  // this port is eliminated by optimize
+};
+celltype tUnmarshaler_sService {
+  call ::sService cServerCall;
+  call sTDR        cTDR;
+  call sEventflag  cEventflag;
+  entry sUnmarshalerMain  eUnmarshalAndCallFunction;
+};

@@ -255,16 +255,38 @@ CODE
         end
     end
 
+    # タスクや変数に適用されるカーネルオブジェクト以外のオブジェクトIDを生成する
+    # TODO: 現在はミューテックス、データキュー、セマフォのみ対応
+    def gen_kernel_object_id_in_kernel_cfg_rs celltype
+
+        obj = get_itronrs_kernel_obj_ref_str
+
+        if obj == "MutexRef" || obj == "DataqueueRef" || obj == "SemaphoreRef" then
+            celltype.get_cell_list.each{ |cell|
+                id = cell.get_attr_initializer("id".to_sym)
+                add_dummy_id_to_kernel_cfg_rs id, 1
+            }
+        end
+    end
+
     # ビルドのためのダミーオブジェクトIDを生成する
     def add_dummy_id_to_kernel_cfg_rs name, id
 
+        file_path = "#{$gen}/kernel_cfg.rs"
+
         # 初回のみファイルを生成する
         if @@kernel_cfg_rs_gen == false then
-            File.write("#{$gen}/kernel_cfg.rs", "")
+            File.write(file_path, "")
             @@kernel_cfg_rs_gen = true
         end
 
-        kernel_cfg_rs = File.open("#{$gen}/kernel_cfg.rs", "a")
+        # 既に同じ定義が存在する場合は追記しない
+        if File.exist?(file_path)
+            existing = File.read(file_path)
+            return if existing.include?("pub const #{name}:")
+        end
+
+        kernel_cfg_rs = File.open(file_path, "a")
 
         if id > 0 then
             kernel_cfg_rs.print "pub const #{name}: i32 = #{id};\t//Dummy id\n"
@@ -1744,6 +1766,9 @@ impl LockManager for TECSSemaphoreRef<'_>{
         # gen_tecs_semaphore_rs
 
         gen_tecs_print_rs
+
+        # カーネルオブジェクトコンポーネントの ID を生成する
+        gen_kernel_object_id_in_kernel_cfg_rs @celltype
 
         copy_gen_files_to_cargo "kernel_cfg.rs"
     end

@@ -17,6 +17,10 @@ pub struct EiNotificationHandlerForTDataqueueRs<'a>{
 	pub cell: &'a TDataqueueRs<'a>,
 }
 
+pub struct LockGuardForTDataqueueRs<'a>{
+	pub dataqueue_ref: &'a DataqueueRef<'a>,
+}
+
 #[link_section = ".rodata"]
 pub static RPROCESSOR1SYMMETRIC_DATAQUEUE: TDataqueueRs = TDataqueueRs {
 	dataqueue_ref: unsafe{DataqueueRef::from_raw_nonnull(NonZeroI32::new(DTQID_UART).unwrap())},
@@ -39,7 +43,9 @@ pub static EINOTIFICATIONHANDLERFORRPROCESSOR1SYMMETRIC_DATAQUEUE: EiNotificatio
 
 impl<> TDataqueueRs<'_> {
 	#[inline]
-	pub fn get_cell_ref(&'static self) -> &'static DataqueueRef {
-		&self.dataqueue_ref
+	pub fn get_cell_ref(&'static self) -> LockGuardForTDataqueueRs<'_> {
+		LockGuardForTDataqueueRs {
+			dataqueue_ref: &self.dataqueue_ref,
+		}
 	}
 }

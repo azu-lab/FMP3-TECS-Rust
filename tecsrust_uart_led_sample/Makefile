@@ -385,7 +385,7 @@ TECS_CPP = $(CC) $(CDEFS) $(INCLUDES) $(SYSSVC_CFLAGS) -D TECSGEN -E
 #  tecsgenの呼出し
 #
 .PHONY: tecs
-tecs $(TECSGEN_SRCS) $(TECS_HEADERS): $(TECSGEN_TIMESTAMP) ;
+tecs $(TECSGEN_SRCS) $(TECS_HEADERS) $(RUST_PLUGIN_SIGNATURE) $(RUST_PLUGIN_CELLTYPE_SRCS) $(RUST_PLUGIN_TECSGEN_SRCS) $(RUST_PLUGIN_SRCS): $(TECSGEN_TIMESTAMP) ;
 $(TECSGEN_TIMESTAMP): $(APPL_CDL) $(TECS_IMPORTS)
 	$(TECSGEN) $< -R $(INCLUDES) --cpp "$(TECS_CPP)" -g $(TECSGENDIR)
 
@@ -393,7 +393,7 @@ $(TECSGEN_TIMESTAMP): $(APPL_CDL) $(TECS_IMPORTS)
 #  カーネルのコンフィギュレーションファイルの生成
 #
 cfg1_out.c cfg1_out.db: cfg1_out.timestamp ;
-cfg1_out.timestamp: $(APPL_CFG) $(TECSGEN_TIMESTAMP)
+cfg1_out.timestamp: $(APPL_CFG) $(TECSGEN_TIMESTAMP) tecs_rust_opt
 	$(CFG) --pass 1 $(CFG_KERNEL) $(INCLUDES) $(CFG_TABS) \
 						-M $(DEPDIR)/cfg1_out_c.d $(TARGET_KERNEL_CFG) $<
 
@@ -448,6 +448,26 @@ TECS_RUST_SRC_DIR = $(TECS_RUST_PROJECT)/src
 TECS_RUST_APPL_LIB = itron
 TECS_RUST_APPL_LIB_PATH = $(TECS_RUST_PROJECT)/target/armv7a-none-eabi/release
 TECS_RUST_BINDING = $(TECS_RUST_SRC_DIR)/kernel_cfg.rs
+
+RUST_FLOW = ruby $(TECSDIR)/rustflow.rb
+TECS_FLOW = ruby $(TECSDIR)/tecsflow.rb
+
+tecsflow_rust : $(TECSGENDIR)/tecsgen.rbdmp rustflow
+	$(TECS_FLOW) -g $(TECSGENDIR) --rust=only
+
+rustflow : tecs 
+	make rustflow_exec
+
+rustflow_exec : $(TECSGENDIR)/rustflow.rbdmp
+$(TECSGENDIR)/rustflow.rbdmp : $(RUST_PLUGIN_CELLTYPE_SRCS)
+	$(RUST_FLOW) -g $(TECSGENDIR) $^
+	
+cargo: $(RUST_PLUGIN_SIGNATURE) $(RUST_PLUGIN_CELLTYPE_SRCS) $(RUST_PLUGIN_TECSGEN_SRCS) $(RUST_PLUGIN_SRCS)
+	cd $(TECS_RUST_PROJECT) && cargo objcopy --release --lib -- --weaken
+
+tecs_rust_opt : cargo tecsflow_rust
+	rm $(TECSGEN_TIMESTAMP)
+	make tecs
 
 #
 #  TECS/Rustのアプリケーションのコンパイル
