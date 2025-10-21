@@ -20,22 +20,22 @@ struct tag_sTaskRs_VDES {
 
 /* signature function table #_SFT_# */
 struct tag_sTaskRs_VMT {
-    ITRONResult__empty__ActivateError__ (*activate__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__ActivateOnError__ (*migrateAndActivate__T)( const struct tag_sTaskRs_VDES *edp, Processor prcid );
-    ITRONResult__usize__CancelActivateAllError__ (*cancelActivate__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__MigrateError__ (*migrate__T)( const struct tag_sTaskRs_VDES *edp, Processor prcid );
-    ITRONResult__State__StateError__ (*getTaskState__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__SetPriorityError__ (*changePriority__T)( const struct tag_sTaskRs_VDES *edp, Priority priority );
-    ER             (*changeSubPriority__T)( const struct tag_sTaskRs_VDES *edp, uint_t subPriority );
-    ITRONResult__Priority__PriorityError__ (*getPriority__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__Info__InfoError__ (*refer__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__WakeError__ (*wakeup__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__usize__CancelWakeAllError__ (*cancelWakeup__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__ReleaseWaitError__ (*releaseWait__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__SuspendError__ (*suspend__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__ResumeError__ (*resume__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__RaiseTerminationError__ (*raiseTerminate__T)( const struct tag_sTaskRs_VDES *edp );
-    ITRONResult__empty__TerminateError__ (*terminate__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::ActivateError>> ) (*activate__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::ActivateOnError>> ) (*migrateAndActivate__T)( const struct tag_sTaskRs_VDES *edp, RType( itron::processor::Processor ) prcid );
+    RType( Result<usize, itron::error::Error<itron::task::CancelActivateAllError>> ) (*cancelActivate__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::MigrateError>> ) (*migrate__T)( const struct tag_sTaskRs_VDES *edp, RType( itron::processor::Processor ) prcid );
+    RType( Result<itron::task::State, itron::error::Error<itron::task::StateError>> ) (*getTaskState__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::SetPriorityError>> ) (*changePriority__T)( const struct tag_sTaskRs_VDES *edp, RType( itron::task::Priority ) priority );
+    RType( itron::abi::ER ) (*changeSubPriority__T)( const struct tag_sTaskRs_VDES *edp, uint_t subPriority );
+    RType( Result<itron::task::Priority, itron::error::Error<itron::task::PriorityError>> ) (*getPriority__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<itron::task::Info, itron::error::Error<itron::task::InfoError>> ) (*refer__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::WakeError>> ) (*wakeup__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<usize, itron::error::Error<itron::task::CancelWakeAllError>> ) (*cancelWakeup__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::ReleaseWaitError>> ) (*releaseWait__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::SuspendError>> ) (*suspend__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::ResumeError>> ) (*resume__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::RaiseTerminationError>> ) (*raiseTerminate__T)( const struct tag_sTaskRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::task::TerminateError>> ) (*terminate__T)( const struct tag_sTaskRs_VDES *edp );
 };
 
 /* signature descriptor #_SDES_# for dynamic join */

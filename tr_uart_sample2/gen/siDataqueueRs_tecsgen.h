@@ -20,8 +20,8 @@ struct tag_siDataqueueRs_VDES {
 
 /* signature function table #_SFT_# */
 struct tag_siDataqueueRs_VMT {
-    ITRONResult__empty__TrySendError__ (*sendPolling__T)( const struct tag_siDataqueueRs_VDES *edp, DataElement data );
-    ITRONResult__empty__SendForcedError__ (*sendForce__T)( const struct tag_siDataqueueRs_VDES *edp, DataElement data );
+    RType( Result<(), itron::error::Error<itron::dataqueue::TrySendError>> ) (*sendPolling__T)( const struct tag_siDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data );
+    RType( Result<(), itron::error::Error<itron::dataqueue::SendForcedError>> ) (*sendForce__T)( const struct tag_siDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data );
 };
 
 /* signature descriptor #_SDES_# for dynamic join */

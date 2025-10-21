@@ -20,11 +20,11 @@ struct tag_sInterruptRequestRs_VDES {
 
 /* signature function table #_SFT_# */
 struct tag_sInterruptRequestRs_VMT {
-    Result__empty__ER__ (*disable__T)( const struct tag_sInterruptRequestRs_VDES *edp );
-    Result__empty__ER__ (*enable__T)( const struct tag_sInterruptRequestRs_VDES *edp );
-    Result__empty__ER__ (*clear__T)( const struct tag_sInterruptRequestRs_VDES *edp );
-    Result__empty__ER__ (*raise__T)( const struct tag_sInterruptRequestRs_VDES *edp );
-    Result__bool__ER__ (*probe__T)( const struct tag_sInterruptRequestRs_VDES *edp );
+    RType( Result<(), itron::abi::ER> ) (*disable__T)( const struct tag_sInterruptRequestRs_VDES *edp );
+    RType( Result<(), itron::abi::ER> ) (*enable__T)( const struct tag_sInterruptRequestRs_VDES *edp );
+    RType( Result<(), itron::abi::ER> ) (*clear__T)( const struct tag_sInterruptRequestRs_VDES *edp );
+    RType( Result<(), itron::abi::ER> ) (*raise__T)( const struct tag_sInterruptRequestRs_VDES *edp );
+    RType( Result<bool, itron::abi::ER> ) (*probe__T)( const struct tag_sInterruptRequestRs_VDES *edp );
 };
 
 /* signature descriptor #_SDES_# for dynamic join */

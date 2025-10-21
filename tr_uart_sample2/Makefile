@@ -387,7 +387,7 @@ TECS_CPP = $(CC) $(CDEFS) $(INCLUDES) $(SYSSVC_CFLAGS) -D TECSGEN -E
 .PHONY: tecs
 tecs $(TECSGEN_SRCS) $(TECS_HEADERS): $(TECSGEN_TIMESTAMP) ;
 $(TECSGEN_TIMESTAMP): $(APPL_CDL) $(TECS_IMPORTS)
-	$(TECSGEN) $< -R $(INCLUDES) --cpp "$(TECS_CPP)" -g $(TECSGENDIR)
+	$(TECSGEN) $< -R $(INCLUDES) --cpp "$(TECS_CPP)" -g $(TECSGENDIR) -t
 
 #
 #  カーネルのコンフィギュレーションファイルの生成

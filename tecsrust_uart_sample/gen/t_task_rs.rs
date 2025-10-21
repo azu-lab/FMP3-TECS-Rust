@@ -1,7 +1,7 @@
 use itron::task::TaskRef;
 use core::num::NonZeroI32;
 use crate::kernel_cfg::*;
-use crate::{s_task_body::*, t_xuart_taskbody::*, t_taskbody::*};
+use crate::{s_task_body::*, t_x_uart_taskbody::*, t_taskbody::*};
 
 pub struct TTaskRs<'a>{
 	pub c_task_body: &'a (dyn STaskBody + Sync + Send),

@@ -1,19 +1,19 @@
 use crate::tecs_global::*;
 pub trait STaskRs {
-	fn activate(&self)-> Result<(), Error<ActivateError>>;
-	fn migrate_and_activate(&self, prcid: &Processor)-> Result<(), Error<ActivateOnError>>;
-	fn cancel_activate(&self)-> Result<usize, Error<CancelActivateAllError>>;
-	fn migrate(&self, prcid: &Processor)-> Result<(), Error<MigrateError>>;
-	fn get_task_state(&self)-> Result<State, Error<StateError>>;
-	fn change_priority(&self, priority: &Priority)-> Result<(), Error<SetPriorityError>>;
-	fn change_sub_priority(&self, subPriority: &uint_t)-> ER;
-	fn get_priority(&self)-> Result<Priority, Error<PriorityError>>;
-	fn refer(&self)-> Result<Info, Error<InfoError>>;
-	fn wakeup(&self)-> Result<(), Error<WakeError>>;
-	fn cancel_wakeup(&self)-> Result<usize, Error<CancelWakeAllError>>;
-	fn release_wait(&self)-> Result<(), Error<ReleaseWaitError>>;
-	fn suspend(&self)-> Result<(), Error<SuspendError>>;
-	fn resume(&self)-> Result<(), Error<ResumeError>>;
-	fn raise_terminate(&self)-> Result<(), Error<RaiseTerminationError>>;
-	fn terminate(&self)-> Result<(), Error<TerminateError>>;
+	fn activate(&self)-> Result<(), itron::error::Error<itron::task::ActivateError>>;
+	fn migrate_and_activate(&self, prcid: &itron::processor::Processor)-> Result<(), itron::error::Error<itron::task::ActivateOnError>>;
+	fn cancel_activate(&self)-> Result<usize, itron::error::Error<itron::task::CancelActivateAllError>>;
+	fn migrate(&self, prcid: &itron::processor::Processor)-> Result<(), itron::error::Error<itron::task::MigrateError>>;
+	fn get_task_state(&self)-> Result<itron::task::State, itron::error::Error<itron::task::StateError>>;
+	fn change_priority(&self, priority: &itron::task::Priority)-> Result<(), itron::error::Error<itron::task::SetPriorityError>>;
+	fn change_sub_priority(&self, subPriority: &uint_t)-> itron::abi::ER;
+	fn get_priority(&self)-> Result<itron::task::Priority, itron::error::Error<itron::task::PriorityError>>;
+	fn refer(&self)-> Result<itron::task::Info, itron::error::Error<itron::task::InfoError>>;
+	fn wakeup(&self)-> Result<(), itron::error::Error<itron::task::WakeError>>;
+	fn cancel_wakeup(&self)-> Result<usize, itron::error::Error<itron::task::CancelWakeAllError>>;
+	fn release_wait(&self)-> Result<(), itron::error::Error<itron::task::ReleaseWaitError>>;
+	fn suspend(&self)-> Result<(), itron::error::Error<itron::task::SuspendError>>;
+	fn resume(&self)-> Result<(), itron::error::Error<itron::task::ResumeError>>;
+	fn raise_terminate(&self)-> Result<(), itron::error::Error<itron::task::RaiseTerminationError>>;
+	fn terminate(&self)-> Result<(), itron::error::Error<itron::task::TerminateError>>;
 }

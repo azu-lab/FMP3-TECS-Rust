@@ -84,8 +84,8 @@ static STK_T _kernel_stack_TSKID_UART[COUNT_STK_T(2048)] __attribute__((section(
 static STK_T _kernel_stack_TSKID_LOOP[COUNT_STK_T(2048)] __attribute__((section(".stack_CLS_PRC2"),nocommon));
 const TINIB _kernel_tinib_table[TNUM_TSKID] = {
 	{ (TA_ACT), (EXINF)((intptr_t)&tTask_INIB_tab[0]), (TASK)(tTask_start), INT_PRIORITY(3), ROUND_STK_T(4096), _kernel_stack_TSKID_tTask_rProcessor1Migratable_LogTask_Task, 1, 0x3 },
-	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor1_symmetric__task1), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_UART, 1, 0x1 },
-	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor2_symmetric__task2), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_LOOP, 2, 0x2 }
+	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor1_symmetric_task1), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_UART, 1, 0x1 },
+	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor2_symmetric_task2), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_LOOP, 2, 0x2 }
 };
 
 static TCB _kernel_tcb_TSKID_tTask_rProcessor1Migratable_LogTask_Task __attribute__((section(".kernel_data_CLS_ALL_PRC1"),nocommon));
@@ -229,7 +229,7 @@ _kernel_inthdr_82(void)
 	}
 
 	LOG_ISR_ENTER(ISRID_PRC2);
-	((ISR)(tecs_rust_start_r_processor1_symmetric__uart_isr))((EXINF)(0));
+	((ISR)(tecs_rust_start_r_processor1_symmetric_uart_isr))((EXINF)(0));
 	LOG_ISR_LEAVE(ISRID_PRC2);
 }
 
@@ -337,7 +337,7 @@ _kernel_initialize_object(PCB *p_my_pcb)
 
 const INIRTNB _kernel_inirtnb_table_prc1[2] = {
 	{ (INIRTN)(_kernel_target_hrt_initialize), (EXINF)(0) },
-	{ (INIRTN)(tecs_rust_start_r_processor1_symmetric__uart_ini), (EXINF)(0) }
+	{ (INIRTN)(tecs_rust_start_r_processor1_symmetric_uart_ini), (EXINF)(0) }
 };
 
 const INIRTNB _kernel_inirtnb_table_prc2[1] = {

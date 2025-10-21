@@ -1,4 +1,4 @@
-use crate::{s_routine_body::*, t_xuart_interrupt_initialize_body::*};
+use crate::{s_routine_body::*, t_x_uart_interrupt_initialize_body::*};
 
 pub struct TInitializeRoutineRs<'a, T>
 where
@@ -15,7 +15,7 @@ where
 }
 
 #[link_section = ".rodata"]
-pub static RPROCESSOR1SYMMETRIC_UARTINI: TInitializeRoutineRs<ERoutineBodyForTXuartInterruptInitializeBody> = TInitializeRoutineRs {
+pub static RPROCESSOR1SYMMETRIC_UARTINI: TInitializeRoutineRs<ERoutineBodyForTXUartInterruptInitializeBody> = TInitializeRoutineRs {
 	c_initialize_routine_body: &EROUTINEBODYFORRPROCESSOR1SYMMETRIC_UARTINIBODY,
 };
 

@@ -20,15 +20,15 @@ struct tag_sDataqueueRs_VDES {
 
 /* signature function table #_SFT_# */
 struct tag_sDataqueueRs_VMT {
-    ITRONResult__empty__SendError__ (*send__T)( const struct tag_sDataqueueRs_VDES *edp, DataElement data );
-    ITRONResult__empty__TrySendError__ (*sendPolling__T)( const struct tag_sDataqueueRs_VDES *edp, DataElement data );
-    ITRONResult__empty__SendTimeoutError__ (*sendTimeout__T)( const struct tag_sDataqueueRs_VDES *edp, DataElement data, Timeout timeout );
-    ITRONResult__empty__SendForcedError__ (*sendForce__T)( const struct tag_sDataqueueRs_VDES *edp, DataElement data );
-    ITRONResult__DataElement__RecvError__ (*receive__T)( const struct tag_sDataqueueRs_VDES *edp );
-    ITRONResult__DataElement__TryRecvError__ (*receivePolling__T)( const struct tag_sDataqueueRs_VDES *edp );
-    ITRONResult__DataElement__RecvTimeoutError__ (*receiveTimeout__T)( const struct tag_sDataqueueRs_VDES *edp, Timeout timeout );
-    ITRONResult__empty__InitializeError__ (*initialize__T)( const struct tag_sDataqueueRs_VDES *edp );
-    ITRONResult__Info__InfoError__ (*refer__T)( const struct tag_sDataqueueRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::dataqueue::SendError>> ) (*send__T)( const struct tag_sDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data );
+    RType( Result<(), itron::error::Error<itron::dataqueue::TrySendError>> ) (*sendPolling__T)( const struct tag_sDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data );
+    RType( Result<(), itron::error::Error<itron::dataqueue::SendTimeoutError>> ) (*sendTimeout__T)( const struct tag_sDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data, RType( itron::time::Timeout ) timeout );
+    RType( Result<(), itron::error::Error<itron::dataqueue::SendForcedError>> ) (*sendForce__T)( const struct tag_sDataqueueRs_VDES *edp, RType( itron::dataqueue::DataElement ) data );
+    RType( Result<itron::dataqueue::DataElement, itron::error::Error<itron::dataqueue::RecvError>> ) (*receive__T)( const struct tag_sDataqueueRs_VDES *edp );
+    RType( Result<itron::dataqueue::DataElement, itron::error::Error<itron::dataqueue::TryRecvError>> ) (*receivePolling__T)( const struct tag_sDataqueueRs_VDES *edp );
+    RType( Result<itron::dataqueue::DataElement, itron::error::Error<itron::dataqueue::RecvTimeoutError>> ) (*receiveTimeout__T)( const struct tag_sDataqueueRs_VDES *edp, RType( itron::time::Timeout ) timeout );
+    RType( Result<(), itron::error::Error<itron::dataqueue::InitializeError>> ) (*initialize__T)( const struct tag_sDataqueueRs_VDES *edp );
+    RType( Result<itron::dataqueue::Info, itron::error::Error<itron::dataqueue::InfoError>> ) (*refer__T)( const struct tag_sDataqueueRs_VDES *edp );
 };
 
 /* signature descriptor #_SDES_# for dynamic join */

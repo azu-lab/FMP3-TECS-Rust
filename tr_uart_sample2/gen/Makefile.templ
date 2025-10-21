@@ -80,7 +80,7 @@ clean :
 tecs : $(PRE_TECSGEN_TARGET) $(TIMESTAMP) $(POST_TECSGEN_TARGET)
 
 $(TIMESTAMP) : $(TECS_IMPORTS)
-	$(TECSGEN)  tecsrustUART.cdl -R -I. -I../include -I../target/zybo_z7_gcc -I../arch/arm_gcc/zynq7000 -I../arch/arm_gcc/common -I../arch/gcc -I.. -I. -I./gen -I../tecs_kernel -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs/rpc --cpp arm-none-eabi-gcc  -DUSE_BYPASS_IPI_DISPATCH_HANDER -D__TARGET_ARCH_ARM=7  -I. -I../include  -I../target/zybo_z7_gcc -I../arch/arm_gcc/zynq7000 -I../arch/arm_gcc/common -I../arch/gcc -I..  -I.  -I./gen  -I../tecs_kernel -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs/rpc  -D TECSGEN -E -g ./gen
+	$(TECSGEN)  tecsrustUART.cdl -R -I. -I../include -I../target/zybo_z7_gcc -I../arch/arm_gcc/zynq7000 -I../arch/arm_gcc/common -I../arch/gcc -I.. -I. -I./gen -I../tecs_kernel -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs/rpc --cpp arm-none-eabi-gcc  -DUSE_BYPASS_IPI_DISPATCH_HANDER -D__TARGET_ARCH_ARM=7  -I. -I../include  -I../target/zybo_z7_gcc -I../arch/arm_gcc/zynq7000 -I../arch/arm_gcc/common -I../arch/gcc -I..  -I.  -I./gen  -I../tecs_kernel -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs -I../../tecsgen-V1.9.0-Beta5/tecsgen/tecsgen/tecs/rpc  -D TECSGEN -E -g ./gen -t
 
 #####  TECSFlow targets  #####
 tecsflow : $(GEN_DIR)/tecsgen.rbdmp tcflow

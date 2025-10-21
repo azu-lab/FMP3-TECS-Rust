@@ -16,42 +16,6 @@
 
 #ifndef TOPPERS_MACRO_ONLY
 
-typedef int_t          TaskRef;
-typedef int_t          ITRONResult__empty__ActivateError__;
-typedef int_t          ITRONResult__empty__ActivateOnError__;
-typedef int_t          ITRONResult__usize__CancelActivateAllError__;
-typedef int_t          ITRONResult__empty__SetPriorityError__;
-typedef int_t          Priority;
-typedef int_t          ITRONResult__Priority__PriorityError__;
-typedef int_t          ITRONResult__empty__MigrateError__;
-typedef int_t          Processor;
-typedef int_t          ITRONResult__State__StateError__;
-typedef int_t          ITRONResult__Info__InfoError__;
-typedef int_t          ITRONResult__empty__WakeError__;
-typedef int_t          ITRONResult__usize__CancelWakeAllError__;
-typedef int_t          ITRONResult__empty__ReleaseWaitError__;
-typedef int_t          ITRONResult__empty__SuspendError__;
-typedef int_t          ITRONResult__empty__ResumeError__;
-typedef int_t          ITRONResult__empty__RaiseTerminationError__;
-typedef int_t          ITRONResult__empty__TerminateError__;
-typedef int_t          SemaphoreRef;
-typedef int_t          ITRONResult__empty__SignalError__;
-typedef int_t          ITRONResult__empty__WaitError__;
-typedef int_t          ITRONResult__empty__PollError__;
-typedef int_t          ITRONResult__empty__WaitTimeoutError__;
-typedef int_t          Timeout;
-typedef int_t          ITRONResult__empty__InitializeError__;
-typedef int_t          DataqueueRef;
-typedef int_t          ITRONResult__empty__SendError__;
-typedef uint_t         DataElement;
-typedef int_t          ITRONResult__empty__TrySendError__;
-typedef int_t          ITRONResult__empty__SendTimeoutError__;
-typedef int_t          ITRONResult__empty__SendForcedError__;
-typedef int_t          ITRONResult__DataElement__RecvError__;
-typedef int_t          ITRONResult__DataElement__TryRecvError__;
-typedef int_t          ITRONResult__DataElement__RecvTimeoutError__;
-typedef int_t          Result__empty__ER__;
-typedef int_t          Result__bool__ER__;
  extern void tTask_CB_initialize();
  extern void tSemaphore_CB_initialize();
  extern void tInterruptRequest_CB_initialize();

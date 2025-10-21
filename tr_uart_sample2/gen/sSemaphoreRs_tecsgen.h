@@ -20,12 +20,12 @@ struct tag_sSemaphoreRs_VDES {
 
 /* signature function table #_SFT_# */
 struct tag_sSemaphoreRs_VMT {
-    ITRONResult__empty__SignalError__ (*signal__T)( const struct tag_sSemaphoreRs_VDES *edp );
-    ITRONResult__empty__WaitError__ (*wait__T)( const struct tag_sSemaphoreRs_VDES *edp );
-    ITRONResult__empty__PollError__ (*waitPolling__T)( const struct tag_sSemaphoreRs_VDES *edp );
-    ITRONResult__empty__WaitTimeoutError__ (*waitTimeout__T)( const struct tag_sSemaphoreRs_VDES *edp, Timeout timeout );
-    ITRONResult__empty__InitializeError__ (*initialize__T)( const struct tag_sSemaphoreRs_VDES *edp );
-    ITRONResult__Info__InfoError__ (*refer__T)( const struct tag_sSemaphoreRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::semaphore::SignalError>> ) (*signal__T)( const struct tag_sSemaphoreRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::semaphore::WaitError>> ) (*wait__T)( const struct tag_sSemaphoreRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::semaphore::PollError>> ) (*waitPolling__T)( const struct tag_sSemaphoreRs_VDES *edp );
+    RType( Result<(), itron::error::Error<itron::semaphore::WaitTimeoutError>> ) (*waitTimeout__T)( const struct tag_sSemaphoreRs_VDES *edp, RType( itron::time::Timeout ) timeout );
+    RType( Result<(), itron::error::Error<itron::semaphore::InitializeError>> ) (*initialize__T)( const struct tag_sSemaphoreRs_VDES *edp );
+    RType( Result<itron::semaphore::Info, itron::error::Error<itron::semaphore::InfoError>> ) (*refer__T)( const struct tag_sSemaphoreRs_VDES *edp );
 };
 
 /* signature descriptor #_SDES_# for dynamic join */

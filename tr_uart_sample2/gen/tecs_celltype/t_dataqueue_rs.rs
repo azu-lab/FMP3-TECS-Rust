@@ -3,7 +3,7 @@ use core::num::NonZeroI32;
 use crate::kernel_cfg::*;
 use crate::tecs_global::*;
 pub struct TDataqueueRs{
-	dataqueue_ref: DataqueueRef<'static>,
+	dataqueue_ref: itron::dataqueue::DataqueueRef<'static>,
 }
 
 pub struct EDataqueueForTDataqueueRs {
@@ -15,7 +15,7 @@ pub struct EiDataqueueForTDataqueueRs {
 }
 
 pub struct LockGuardForTDataqueueRs<'a>{
-	pub dataqueue_ref: &'a DataqueueRef<'static>,
+	pub dataqueue_ref: &'a itron::dataqueue::DataqueueRef<'static>,
 }
 
 #[unsafe(link_section = ".rodata")]
@@ -35,7 +35,7 @@ pub static EIDATAQUEUEFORRPROCESSOR1SYMMETRIC_DATAQUEUE: EiDataqueueForTDataqueu
 
 impl TDataqueueRs {
 	#[inline]
-	pub fn get_cell_ref(&'static self) -> LockGuardForTDataqueueRs<'_> {
+	pub fn get_cell_ref(&'static self) -> LockGuardForTDataqueueRs {
 		LockGuardForTDataqueueRs {
 			dataqueue_ref: &self.dataqueue_ref,
 		}

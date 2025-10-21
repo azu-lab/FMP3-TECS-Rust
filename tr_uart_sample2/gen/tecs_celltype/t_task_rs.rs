@@ -7,7 +7,7 @@ use crate::tecs_celltype::{t_x_uart_taskbody::*, t_taskbody::*};
 
 pub struct TTaskRs{
 	pub c_task_body: &'static (dyn STaskBody + Sync + Send),
-	task_ref: TaskRef<'static>,
+	task_ref: itron::task::TaskRef<'static>,
 }
 
 pub struct ETaskForTTaskRs {
@@ -20,7 +20,7 @@ pub struct EiTaskForTTaskRs {
 
 pub struct LockGuardForTTaskRs<'a>{
 	pub c_task_body: &'a (dyn STaskBody + Sync + Send),
-	pub task_ref: &'a TaskRef<'static>,
+	pub task_ref: &'a itron::task::TaskRef<'static>,
 }
 
 #[unsafe(link_section = ".rodata")]
