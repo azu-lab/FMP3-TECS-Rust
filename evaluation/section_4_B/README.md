@@ -16,4 +16,4 @@ This directory contains the samples used in Section IV-B of the paper.
 ### tecs_uart_sample
 - A sample that measures the execution time of UART `put_char`.
 - To enable optimization of mutual exclusion, set `ENABLE_TECS_RUST_OPT` to `1` in the `Makefile`.
-    - After optimization, if you want to apply semaphores, uncomment the `Task2` cell and the `TaskBody` cell at the bottom of `tecsrustCAN.cdl`.
+    - After optimization, if you want to apply semaphores, uncomment the `UartTask2` cell at the bottom of `tecsrustUART.cdl`.
