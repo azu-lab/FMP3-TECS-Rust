@@ -238,7 +238,7 @@
     "ExclusiveControl": "false",
     "Accessed": [
       {
-        "ActiveCell": "rProcessor1Symmetric_Task1",
+        "ActiveCell": "rProcessor1Symmetric_UartTask1",
         "Priority": "7",
         "Celltype": "tTaskRs",
         "Callport": "cTaskBody",
@@ -256,7 +256,7 @@
     "ExclusiveControl": "false",
     "Accessed": [
       {
-        "ActiveCell": "rProcessor1Symmetric_Task1",
+        "ActiveCell": "rProcessor1Symmetric_UartTask1",
         "Priority": "7",
         "Celltype": "tTaskRs",
         "Callport": "cTaskBody",
@@ -273,7 +273,7 @@
         ]
       },
       {
-        "ActiveCell": "rProcessor1Symmetric_Task1",
+        "ActiveCell": "rProcessor1Symmetric_UartTask1",
         "Priority": "7",
         "Celltype": "tTaskRs",
         "Callport": "cTaskBody",

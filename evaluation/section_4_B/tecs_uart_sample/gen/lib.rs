@@ -17,6 +17,6 @@ use tecs_celltype::t_task_rs::*;
 use tecs_signature::s_task_body::*;
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tecs_rust_start_r_processor1_symmetric_task1(_: usize) {
-	RPROCESSOR1SYMMETRIC_TASK1.c_task_body.main();
+pub extern "C" fn tecs_rust_start_r_processor1_symmetric_uart_task1(_: usize) {
+	RPROCESSOR1SYMMETRIC_UARTTASK1.c_task_body.main();
 }

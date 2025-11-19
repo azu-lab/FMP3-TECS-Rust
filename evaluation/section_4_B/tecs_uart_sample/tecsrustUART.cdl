@@ -123,6 +123,7 @@ celltype tXUartTaskbody {
   call sXUart cXUart;
   call sDataqueueRs cDataqueue;
   entry sTaskBody eTaskbody;
+  /*
   attr {///
     uint8_t buffer_size = 128;///
   };///
@@ -130,13 +131,14 @@ celltype tXUartTaskbody {
     [size_is(buffer_size)] uint8_t *buffer; ///
     uint8_t buffer_count = 0; ///
   };///
+  */
 };
 
 [class(FMP,"CLS_PRC1")]
 region rProcessor1Symmetric{
 
     [generate(RustFMP3Plugin, "TASK, lib")]
-    cell tTaskRs Task1 {
+    cell tTaskRs UartTask1 {
       /* 呼び口の結合 */
       cTaskBody = rProcessor1Symmetric::Taskbody.eTaskbody;
       /* 属性の設定 */
@@ -181,21 +183,13 @@ celltype tTaskbody {
 region rProcessor2Symmetric{
 
     //[generate(RustFMP3Plugin, "TASK, lib")]
-    //cell tTaskRs Task2 {
-    //  /* 呼び口の結合 */
-    //  cTaskBody = rProcessor2Symmetric::TaskBody.eTaskbody;
-    //  /* 属性の設定 */
-    //  id = PL_EXP("TSKID_LOOP");
-    //  task_ref = PL_EXP("unsafe{itron::task::TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_LOOP).unwrap())}");
+    //cell tTaskRs UartTask2 {
+    //  cTaskBody = rProcessor1Symmetric::Taskbody.eTaskbody;
+    //  id = PL_EXP("TSKID_UART2");
+    //  task_ref = PL_EXP("unsafe{itron::task::TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_UART2).unwrap())}");
     //  priority = 7;
     //  stackSize = 2048;
     //  attribute = PL_EXP("TA_ACT");
-    //};
-
-    //[generate(RustFMP3Plugin, "lib")]
-    //cell tTaskbody TaskBody {
-    //  cXUart = rProcessor1Symmetric::Uart.eXUart;
-    //  cDataqueue = rProcessor1Symmetric::Dataqueue.eDataqueue;
     //};
 };
 

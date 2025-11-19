@@ -286,7 +286,7 @@
 00109234 T memset
 001092d8 t _ZN68_$LT$itron..error..Error$LT$Kind$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h14cdce66ca2c44f1E
 001092dc W _RNvCsgYTF1aGAkck_7___rustc17rust_begin_unwind
-001092e0 W tecs_rust_start_r_processor1_symmetric_task1
+001092e0 W tecs_rust_start_r_processor1_symmetric_uart_task1
 001095a0 t _ZN4core3fmt3num50_$LT$impl$u20$core..fmt..Debug$u20$for$u20$i32$GT$3fmt17h7a0e08473eadbc5bE
 001095c0 t _ZN75_$LT$core..num..nonzero..NonZero$LT$T$GT$$u20$as$u20$core..fmt..Display$GT$3fmt17h850f84802fa3eaddE
 001095e0 W _ZN60_$LT$itron..error..ErrorCode$u20$as$u20$core..fmt..Debug$GT$3fmt17hf3b2cd5bb64ff3e9E

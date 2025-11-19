@@ -83,7 +83,7 @@ static STK_T _kernel_stack_TSKID_tTask_rProcessor1Migratable_LogTask_Task[COUNT_
 static STK_T _kernel_stack_TSKID_UART[COUNT_STK_T(2048)] __attribute__((section(".stack_CLS_PRC1"),nocommon));
 const TINIB _kernel_tinib_table[TNUM_TSKID] = {
 	{ (TA_ACT), (EXINF)((intptr_t)&tTask_INIB_tab[0]), (TASK)(tTask_start), INT_PRIORITY(3), ROUND_STK_T(4096), _kernel_stack_TSKID_tTask_rProcessor1Migratable_LogTask_Task, 1, 0x3 },
-	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor1_symmetric_task1), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_UART, 1, 0x1 }
+	{ (TA_ACT), (EXINF)(0), (TASK)(tecs_rust_start_r_processor1_symmetric_uart_task1), INT_PRIORITY(7), ROUND_STK_T(2048), _kernel_stack_TSKID_UART, 1, 0x1 }
 };
 
 static TCB _kernel_tcb_TSKID_tTask_rProcessor1Migratable_LogTask_Task __attribute__((section(".kernel_data_CLS_ALL_PRC1"),nocommon));

@@ -29,19 +29,19 @@ where
 }
 
 #[unsafe(link_section = ".rodata")]
-pub static RPROCESSOR1SYMMETRIC_TASK1: TTaskRs<ETaskbodyForTXUartTaskbody> = TTaskRs {
+pub static RPROCESSOR1SYMMETRIC_UARTTASK1: TTaskRs<ETaskbodyForTXUartTaskbody> = TTaskRs {
 	c_task_body: &ETASKBODYFORRPROCESSOR1SYMMETRIC_TASKBODY,
 	task_ref: unsafe{itron::task::TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_UART).unwrap())},
 };
 
 #[unsafe(link_section = ".rodata")]
-pub static ETASKFORRPROCESSOR1SYMMETRIC_TASK1: ETaskForTTaskRs = ETaskForTTaskRs {
-	cell: &RPROCESSOR1SYMMETRIC_TASK1,
+pub static ETASKFORRPROCESSOR1SYMMETRIC_UARTTASK1: ETaskForTTaskRs = ETaskForTTaskRs {
+	cell: &RPROCESSOR1SYMMETRIC_UARTTASK1,
 };
 
 #[unsafe(link_section = ".rodata")]
-pub static EITASKFORRPROCESSOR1SYMMETRIC_TASK1: EiTaskForTTaskRs = EiTaskForTTaskRs {
-	cell: &RPROCESSOR1SYMMETRIC_TASK1,
+pub static EITASKFORRPROCESSOR1SYMMETRIC_UARTTASK1: EiTaskForTTaskRs = EiTaskForTTaskRs {
+	cell: &RPROCESSOR1SYMMETRIC_UARTTASK1,
 };
 
 impl<T: STaskBody> TTaskRs<T> {
