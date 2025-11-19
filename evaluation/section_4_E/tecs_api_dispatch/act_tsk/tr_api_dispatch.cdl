@@ -57,9 +57,9 @@ region rProcessor1Migratable {
     */
    cell tSysLog SysLog {
      logBufferSize = 32;					/* ログバッファのサイズ */
-     initLogMask = PL_EXP("LOG_UPTO(LOG_NOTICE)");
+     initLogMask = C_EXP("LOG_UPTO(LOG_NOTICE)");
                        /* ログバッファに記録すべき重要度 */
-     initLowMask = PL_EXP("LOG_UPTO(LOG_EMERG)");
+     initLowMask = C_EXP("LOG_UPTO(LOG_EMERG)");
                          /* 低レベル出力すべき重要度 */
      /* 低レベル出力との結合 */
      cPutLog = PutLogTarget.ePutLog;
@@ -109,96 +109,100 @@ region rProcessor1Migratable {
     *  カーネル起動メッセージの出力を外す場合には，以下のセルの組上げ記述
     *  を削除すればよい．
     */
-   //cell tBanner Banner {
-   //  /* 属性の設定 */
-   //  targetName      = BannerTargetName;
-   //  copyrightNotice = BannerCopyrightNotice;
-   //};
+   cell tBanner Banner {
+     /* 属性の設定 */
+     targetName      = BannerTargetName;
+     copyrightNotice = BannerCopyrightNotice;
+   };
 };
 
-import("tecsrustUART_def.cdl");
-
-// 受信処理
-celltype tXUartTaskbody {
-  call sXUart cXUart;
-  call sDataqueueRs cDataqueue;
+celltype tMeasure {
+  call sTaskRs cTask;
+  call sTaskRs cTaskmig;
   entry sTaskBody eTaskbody;
-  attr {///
-    uint8_t buffer_size = 128;///
-  };///
-  var {///
-    [size_is(buffer_size)] uint8_t *buffer; ///
-    uint8_t buffer_count = 0; ///
-  };///
+};
+
+celltype tLoopTaskbody {
+  entry sTaskBody eTaskbody;
+};
+
+celltype tStopTaskbody {
+  call sTaskRs cSelfTask;
+  entry sTaskBody eTaskbody;
 };
 
 [class(FMP,"CLS_PRC1")]
 region rProcessor1Symmetric{
 
     [generate(RustFMP3Plugin, "TASK, lib")]
-    cell tTaskRs Task1 {
-      /* 呼び口の結合 */
-      cTaskBody = rProcessor1Symmetric::Taskbody.eTaskbody;
-      /* 属性の設定 */
-      id = PL_EXP("TSKID_UART");
-      task_ref = PL_EXP("unsafe{itron::task::TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_UART).unwrap())}");
-      priority = 7;
-      stackSize = 2048;
-      attribute = PL_EXP("TA_ACT");
+    cell tTaskRs Task1_1 {
+        cTaskBody = rProcessor1Symmetric::Measure.eTaskbody;
+        id = C_EXP("TSKID_1_1");
+        task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_1_1).unwrap())}");
+        priority = 4;
+        stackSize = 2048;
+        attribute = C_EXP("TA_ACT");
     };
 
-    [generate(RustFMP3Plugin, "lib")]
-    cell tXUartTaskbody Taskbody {
-      cXUart = Uart.eXUart;
-      cDataqueue = Dataqueue.eDataqueue;
-    };
-
-    [generate(RustFMP3Plugin, "lib")]
-    cell tXUart Uart {
-      base_address = PL_EXP("0xE0001000");
-      mode = PL_EXP("0x0020");
-      baudgen = PL_EXP("0x007c");
-      bauddiv = PL_EXP("0x06");
-    };
-
-    [generate(RustFMP3Plugin, "lib, DATAQUEUE")]
-    cell tDataqueueRs Dataqueue {
-      id = PL_EXP("DTQID_UART");
-      dataqueue_ref = PL_EXP("unsafe{itron::dataqueue::DataqueueRef::from_raw_nonnull(NonZeroI32::new(DTQID_UART).unwrap())}");
-      attribute = PL_EXP("TA_NULL");
-      dataCount = 1;
+    [generate (RustFMP3Plugin, "lib")]
+    cell tMeasure Measure {
+      cTask = rProcessor2Symmetric::Task2_2.eTask;
+      cTaskmig = rProcessorAllMig::Taskmig.eTask;
     };
 };
 
-// 送信処理タスク
-celltype tTaskbody {
-  entry sTaskBody eTaskbody;
-  call sXUart cXUart;
-  call sDataqueueRs cDataqueue;
+[class(FMP,"CLS_ALL_PRC1")]
+region rProcessorAllMig{
+    [generate(RustFMP3Plugin, "TASK, lib")]
+    cell tTaskRs Taskmig {
+        /* 呼び口の結合 */
+        cTaskBody = rProcessorAllMig::StopTaskmigbody.eTaskbody;
+        /* 属性の設定 */
+        id = C_EXP("TSKID_MIG");
+        task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_MIG).unwrap())}");
+        priority = 6;
+        stackSize = 2048;
+        attribute = C_EXP("TA_NULL");
+    };
+
+    [generate (RustFMP3Plugin, "lib")]
+    cell tStopTaskbody StopTaskmigbody {
+      cSelfTask = rProcessorAllMig::Taskmig.eTask;
+    };
 };
 
 [class(FMP,"CLS_PRC2")]
 region rProcessor2Symmetric{
 
-    //[generate(RustFMP3Plugin, "TASK, lib")]
-    //cell tTaskRs Task2 {
-    //  /* 呼び口の結合 */
-    //  cTaskBody = rProcessor2Symmetric::TaskBody.eTaskbody;
-    //  /* 属性の設定 */
-    //  id = PL_EXP("TSKID_LOOP");
-    //  task_ref = PL_EXP("unsafe{itron::task::TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_LOOP).unwrap())}");
-    //  priority = 7;
-    //  stackSize = 2048;
-    //  attribute = PL_EXP("TA_ACT");
-    //};
+    [generate(RustFMP3Plugin, "TASK, lib")]
+    cell tTaskRs Task2_1 {
+        cTaskBody = rProcessor2Symmetric::LoopTaskbody.eTaskbody;
+        id = C_EXP("TSKID_2_1");
+        task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_2_1).unwrap())}");
+        priority = 7;
+        stackSize = 2048;
+        attribute = C_EXP("TA_ACT");
+    };
 
-    //[generate(RustFMP3Plugin, "lib")]
-    //cell tTaskbody TaskBody {
-    //  cXUart = rProcessor1Symmetric::Uart.eXUart;
-    //  cDataqueue = rProcessor1Symmetric::Dataqueue.eDataqueue;
-    //};
+    [generate (RustFMP3Plugin, "lib")]
+    cell tLoopTaskbody LoopTaskbody {
+    };
+
+    [generate(RustFMP3Plugin, "TASK, lib")]
+    cell tTaskRs Task2_2 {
+        cTaskBody = rProcessor2Symmetric::StopTaskbody.eTaskbody;
+        id = C_EXP("TSKID_2_2");
+        task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_2_2).unwrap())}");
+        priority = 5;
+        stackSize = 2048;
+        attribute = C_EXP("TA_NULL");
+    };
+
+    [generate (RustFMP3Plugin, "lib")]
+    cell tStopTaskbody StopTaskbody {
+      cSelfTask = rProcessor2Symmetric::Task2_2.eTask;
+    };
 };
-
 
 
 

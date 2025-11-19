@@ -1,36 +1,59 @@
 # FMP3+TECS/Rust
-FMP3+TECS/Rust is a framework that combines [FMP+TECS](https://github.com/azu-lab/FMP3-TECS) (which applies TECS to [TOPPERS/FMP3](https://www.toppers.jp/fmp3-kernel.html) to componentize the kernel) with [TECS/Rust](https://github.com/Nagi70/TECS-Rust), an extension of TECS supporting Rust. Together they provide a component-oriented environment for integrating Rust code with the FMP3 real-time kernel.
+FMP3+TECS/Rust is a framework that combines [FMP+TECS](https://github.com/azu-lab/FMP3-TECS) — a componentized framework applying TECS to [TOPPERS/FMP3](https://www.toppers.jp/fmp3-kernel.html) — with [TECS/Rust](https://github.com/Nagi70/TECS-Rust), which adapts TECS for Rust.
 
-#### Sample Programs
-There are multiple sample programs; the easiest to understand is `tr_uart_led_sample2`, a simple example combining UART and an LED.
+### Sample Programs
+The `evaluation` directory contains the samples used in the paper. Instructions for running each sample are provided in each respective directory.
 
-#### Development Environment
-1. Vitis & Vivado
+### Development Environment
+1. Vitis and Vivado
 
-   - Download Vitis and Vivado from [here](https://japan.xilinx.com/support/download.html).
-   - The sample program runs in a minimal configuration without using the PL (programmable logic) part.
+   - You can download Vitis and Vivado from [here](https://japan.xilinx.com/support/download.html).
+
+      - The sample programs can run with a minimal configuration that does not use the PL part.
 
 2. Target Board
 
    - Zybo Z7_10 Zynq-7010 ARM development board
-   - Dual-core ARM Cortex-A9 SoC.
+   
+      - A dual-core development board equipped with an ARM Cortex-A9.
 
 3. Toolchains
 
-   - Install Rust to compile the Rust code.
-   - Rust installation instructions: [https://rust-lang.org/tools/install/](https://rust-lang.org/tools/install/)
-   - Verified with: `rustc 1.89.0-nightly (bf64d66bd 2025-05-21)`
-   - Ruby is required for the TECS generator and kernel configurator.
-   - Verified with: `ruby 2.7.8p225`. Versions 3.0 and above may not work correctly.
+   - Rust
+      - Rust is required to compile the code.
 
-#### Build & Run Steps
-All operations below are performed within XSDK.
+      - Install Rust from [here](https://rust-lang.org/tools/install/).
+
+      - Verified to work with `rustc 1.89.0-nightly (bf64d66bd 2025-05-21)`.
+
+   - bindgen
+      - Installing bindgen is required for builds.
+
+      - Install bindgen from [here](https://rust-lang.github.io/rust-bindgen/command-line-usage.html)
+
+      - Verified to work with `bindgen-cli v0.69.0`.
+
+   - Ruby
+
+      - Ruby is required to use the TECS generator and the kernel configurator.
+
+      - Verified to work with `ruby 2.7.8p225`; versions 3.0 or later may not work properly.
+
+
+### Build and Run
+All of the following operations are performed on XSDK.
 1. Build
 
-   - Change to the `tr_uart_led_sample2` directory and run `make`.
-   - This performs Rust code generation, optimization of mutual exclusion handling, and linking with the FMP3 kernel to produce `fmp.elf`.
+   - Move to a directory under the `evaluation` directory that contains a `Makefile`.
+   
+   - To enable optimization of mutual exclusion, set `ENABLE_TECS_RUST_OPT` to `1` in the `Makefile`.
+   
+   - Run the `make` command.
+   
+   - This builds the Rust code and links it with the FMP3 kernel to produce `fmp.elf`.
 
 2. Run
 
-   - Use Vitis to load `fmp.elf` onto the board to execute the program.
+   - Use Vitis to program `fmp.elf` to the board.
+
 

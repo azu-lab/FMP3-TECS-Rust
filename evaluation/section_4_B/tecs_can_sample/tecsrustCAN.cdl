@@ -210,9 +210,7 @@ region rProcessor2Symmetric{
 
     //[generate(RustFMP3Plugin, "TASK, lib")]
     //cell tTaskRs CanTask2 {
-    //  /* 呼び口の結合 */
     //  cTaskBody = rProcessor1Symmetric::CanTaskbody.eTaskbody;
-    //  /* 属性の設定 */
     //  id = C_EXP("TSKID_CAN2");
     //  task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_CAN2).unwrap())}");
     //  priority = 7;

@@ -196,9 +196,7 @@ region rProcessor2Symmetric{
 
     //[generate(RustFMP3Plugin, "TASK, lib")]
     //cell tTaskRs LedTask2 {
-    //  /* 呼び口の結合 */
     //  cTaskBody = rProcessor1Symmetric::LedTaskbody.eTaskbody;
-    //  /* 属性の設定 */
     //  id = C_EXP("TSKID_LED2");
     //  task_ref = C_EXP("unsafe{TaskRef::from_raw_nonnull(NonZeroI32::new(TSKID_LED2).unwrap())}");
     //  priority = 7;
