@@ -11,7 +11,7 @@ The `evaluation` directory contains the samples used in the paper. Instructions 
 
       - The sample programs can run with a minimal configuration that does not use the PL part.
 
-      - The project used was the contents extracted from `fmp3_workspace.zip`
+      - The project used was the contents extracted from [`fmp3_workspace.zip`](./fmp3_workspace.zip).
 
 2. Target Board
 
@@ -31,7 +31,7 @@ The `evaluation` directory contains the samples used in the paper. Instructions 
    - bindgen
       - Installing bindgen is required for builds.
 
-      - Install bindgen from [here](https://rust-lang.github.io/rust-bindgen/command-line-usage.html)
+      - Install bindgen from [here](https://rust-lang.github.io/rust-bindgen/command-line-usage.html).
 
       - Verified to work with `bindgen-cli v0.69.0`.
 
@@ -56,10 +56,12 @@ All of the following operations are performed on XSDK.
 
 2. Run
 
-   - Unzip `fmp3_workspace.zip`.
+   - Unzip [`fmp3_workspace.zip`](./fmp3_workspace.zip).
 
    - Open the extracted `fmp3_workspace` in Vitis.
 
    - In Vitis, write `fmp.elf` to core0 using `launch.json` to run it.
 
+## License
+   It is released under [TOPPERS license](https://www.toppers.jp/license.html). The copyright holder is TOPPERS Project TECS Working Group. Please refer to [LICENSE.md](./LICENSE.md) for details.
 
